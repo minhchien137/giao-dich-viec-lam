@@ -1,0 +1,113 @@
+@{
+    ViewData["Title"] = "Detail Account";
+}
+<header class="page-header">
+    <h2 class="page-title">
+        Thông tin tài khoản
+    </h2>
+</header>
+<div class="container">
+    <div class="row p-4">
+        <form id="userForm" class="col-8">
+            <div class="form-group">
+                <label for="fullName">Họ và tên *</label>
+                <input type="text" class="form-control" id="fullName" value="@ViewBag.user.sFullName">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Số điện thoại</label>
+                <input type="text" class="form-control" id="phoneNumber" value="@ViewBag.user.sPhoneNumber" disabled>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" value="@ViewBag.user.TblAccount.sEmailAccount"
+                    disabled>
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ</label>
+                <textarea cols="20" rows="3" type="text" class="form-control" name="candidate_address"
+                    id="candidate_address" placeholder="" value="" maxlength="">@ViewBag.user.sAddress</textarea>
+            </div>
+            <div class="form-group">
+                <label for="skills">Kỹ năng</label>
+                <input type="text" class="form-control" id="skills" value="@ViewBag.user.sSkills">
+            </div>
+            <div class="form-group">
+                <label for="experience">Kinh nghiệm</label>
+                <input type="text" class="form-control" id="experience" value="@ViewBag.user.sExperience">
+            </div>
+            <div class="form-group">
+                <label for="education">Học vấn</label>
+                <input type="text" class="form-control" id="education" value="@ViewBag.user.sEducation">
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="saveChanges()">Lưu</button>
+            </div>
+        </form>
+
+        <div class="col-4" style="border-left: 1px solid black;">
+            @if (!string.IsNullOrEmpty(ViewBag.user.sPhoto))
+            {
+                <div class="logo-user" style="background-image: url('@ViewBag.user.sPhoto');">
+                </div>
+            }
+            else
+            {
+                <div class="logo-user d-flex align-items-center justify-content-center">
+                    <i class="fas fa-user"></i>
+                </div>
+            }
+            <div class="mt-3">Chào mừng bạn, <strong>@ViewBag.user.sFullName</strong> </div>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- Thông báo khi lưu thành công -->
+<div id="message" style="display:none; color: green;">Thông tin đã được lưu thành công!</div>
+<script>
+    function saveChanges() {
+        // Lấy giá trị từ các input
+        var fullName = document.getElementById('fullName').value;
+        var phoneNumber = document.getElementById('phoneNumber').value;
+        var email = document.getElementById('email').value;
+        var address = document.getElementById('candidate_address').value;
+        var skills = document.getElementById('skills').value;
+        var experience = document.getElementById('experience').value;
+        var education = document.getElementById('education').value;
+
+        // Lấy UserId từ một biến nào đó, ví dụ qua một ViewBag hoặc hidden input
+        var userId = @ViewBag.user.iProfileID;
+
+        // Tạo đối tượng dữ liệu để gửi
+        var userData = {
+            UserId: userId,
+            FullName: fullName,
+            PhoneNumber: phoneNumber,
+            Email: email,
+            Address: address,
+            Skills: skills,
+            Experience: experience,
+            Education: education
+        };
+
+        // Gửi yêu cầu POST đến API
+        fetch('/api/user/updateUserDetails', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    // Hiển thị thông báo thành công
+                    alert(data.message)
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
+</script>

@@ -1,0 +1,42 @@
+﻿@model WebGiaoDichViecLam.Models.tblCategory
+
+<header class="page-header">
+    <h2 class="page-title">Thêm mới ngành nghề</h2>
+</header>
+@*  @if (!ViewData.ModelState.IsValid)
+  {
+      <div class="alert alert-danger">
+          @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+          {
+              <p>@error.ErrorMessage</p>
+          }
+      </div>
+  }*@
+ 
+<div id="primary" class="content-area container" role="main">
+    <div class="row">
+        <div class="col-sm-12 col-md-8 col-md-offset-2">
+            <article class="page">
+                <div class="entry-content">
+                    <div class="woocommerce">
+                        <div class="woocommerce-notices-wrapper"></div>
+                        <form class="woocommerce-form" asp-controller = "Category" asp-action="AddCategoryJob" method="post">
+                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                <label for="sCategoryName">Tên ngành nghề&nbsp;<span class="required">*</span></label>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       asp-for="sCategoryName" required placeholder="Nhập tên ngành nghề" />
+                                <span asp-validation-for="sCategoryName" class="text-danger"></span>
+                            </p>
+                            <div class="form-row">
+                                <button type="submit" class="woocommerce-button button woocommerce-form-login__submit">
+                                    Thêm mới
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+        

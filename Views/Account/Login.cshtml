@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Đăng nhập";
+    bool isLockedOut = ViewData["IsLockedOut"] != null && (bool)ViewData["IsLockedOut"];
+}
+
+<header class="page-header">
+    <h2 class="page-title">Đăng nhập tài khoản</h2>
+</header>
+<div id="primary" class="content-area container" role="main">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <article id="post-51" class="post-51 page type-page status-publish hentry">
+                <div class="entry-content">
+                    <div class="woocommerce">
+                        <div class="woocommerce-notices-wrapper"></div>
+                        <div class="woocommerce-customer-login">
+                            <h2>Login</h2>
+                            <form asp-action="Login" class="woocommerce-form woocommerce-form-login login"
+                                method="post">
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="username">Tên đăng nhập hoặc Địa chỉ email&nbsp;<span
+                                            class="required">*</span></label>
+                                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                        name="username" id="username" autocomplete="username" value="" />
+                                </p>
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="password">Mật khẩu&nbsp;<span class="required">*</span></label>
+                                    <input class="woocommerce-Input woocommerce-Input--text input-text" type="password"
+                                        name="password" id="password" autocomplete="current-password" />
+                                </p>
+                                <div class="form-row">
+                                    <label
+                                        class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
+                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox"
+                                            name="rememberme" type="checkbox" id="rememberme" value="forever" />
+                                        <span>Nhớ mật khẩu</span>
+                                    </label>
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce"
+                                        value="6c98d4cb39" />
+                                    <input type="hidden" name="_wp_http_referer" value="/skin-2/myaccount/" />
+                                </div>
+                                <!-- Nút đăng nhập được đặt ở đây -->
+                                <button type="submit" class="woocommerce-button button woocommerce-form-login__submit"
+                                    name="login" value="Log in" @(isLockedOut ? "disabled" : "")> Đăng nhập</button>
+                                <!-- Phần Quên mật khẩu -->
+                                <p class="woocommerce-LostPassword lost_password" style="margin-top: 10px;">
+                                    <a href="/Account/ForgotPassword">Quên mật khẩu?</a>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </article><!-- #post -->
+        </div>
+    </div>
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="alert alert-danger">
+            <ul>
+                @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                {
+                    <li>@error.ErrorMessage</li>
+                }
+            </ul>
+        </div>
+    }
+</div><!-- #primary -->

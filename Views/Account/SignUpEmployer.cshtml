@@ -1,0 +1,90 @@
+﻿@{
+    ViewData["Title"] = "SignUpEmployer";
+}
+
+<header class="page-header">
+    <h2 class="page-title">Đăng ký thông tin nhà tuyển dụng</h2>
+</header>
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+}
+
+<div id="primary" class="content-area container" role="main">
+    <div class="row">
+        <div class="col-sm-12 col-md-10 col-md-offset-1">
+            <article class="page type-page status-publish hentry">
+                <div class="entry-content">
+                    <div class="registration-form woocommerce">
+                        <form method="post" class="register" enctype="multipart/form-data">
+                            <input type="hidden" name="iAccountID" value="@ViewBag.AccountId" />
+                            <!-- Thông tin nhà tuyển dụng -->
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_fullname">Họ tên đầy đủ<span class="required">*</span></label>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="fullname" id="reg_fullname" value="" required />
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_phone">Số điện thoại cá nhân<span class="required">*</span></label>
+                                <input type="tel" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="phone" id="reg_phone" value="" required />
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_address">Địa chỉ cá nhân<span class="required">*</span></label>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="address" id="reg_address" value="" required />
+                            </p>
+
+                            <!-- Thông tin công ty -->
+                            <h3 style="font-size: 22px; text-align: center; color: blue; ">Thông tin công ty</h3> <!-- Chỉnh sửa đây -->
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_companyname">Tên công ty<span class="required">*</span></label>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="companyName" id="reg_companyname" value="" required />
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_companyphone">Số điện thoại công ty<span class="required">*</span></label>
+                                <input type="tel" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="companyPhone" id="reg_companyphone" value="" required />
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_companyaddress">Địa chỉ công ty<span class="required">*</span></label>
+                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="companyAddress" id="reg_companyaddress" value="" required />
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_companydesc">Mô tả công ty</label>
+                                <textarea class="woocommerce-Input woocommerce-Input--textarea input-text"
+                                          name="companyDescription" id="reg_companydesc" rows="4"></textarea>
+                            </p>
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_employeenumber">Số lượng nhân viên<span class="required">*</span></label>
+                                <input type="number" class="woocommerce-Input woocommerce-Input--text input-text"
+                                       name="numberEmployees" id="reg_employeenumber" value="" required />
+                            </p>
+
+                            <!-- Thêm ảnh công ty -->
+                            <p class="woocommerce-FormRow woocommerce-FormRow--wide form-row form-row-wide">
+                                <label for="reg_companyphoto">Ảnh công ty</label>
+                                <input type="file" class="woocommerce-Input woocommerce-Input--file input-text"
+                                       name="companyPhoto" id="reg_companyphoto" accept="image/*" />
+                            </p>
+
+                            <!-- Spam Trap (anti-spam) -->
+                            <div style="left: -999em; position: absolute;">
+                                <label for="trap">Anti-spam</label><input type="text" name="email_2" id="trap" tabindex="-1" autocomplete="off" />
+                            </div>
+
+                            <input type="hidden" value="employer" name="reg_role" />
+                            <div class="woocommerce-privacy-policy-text"></div>
+                            <p class="woocomerce-FormRow form-row">
+                                <input type="submit" class="woocommerce-Button button" name="register" value="Đăng ký thông tin" />
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </article><!-- #post -->
+        </div>
+    </div>
+</div><!-- #primary -->

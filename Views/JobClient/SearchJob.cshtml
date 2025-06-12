@@ -1,0 +1,192 @@
+@using System.Globalization
+@{
+    ViewData["Title"] = "Search";
+}
+@functions {
+    public string GetRelativeTime(DateTime postedDate)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan timeDiff = now - postedDate;
+
+        if (timeDiff.TotalHours < 24 && now.Date == postedDate.Date)
+        {
+            int hours = (int)timeDiff.TotalHours;
+            return $"{hours} giờ trước";
+        }
+        else
+        {
+            return postedDate.ToString("dd/MM/yyyy");
+        }
+    }
+    public static string FormatToVND(double amount)
+    {
+        var culture = new CultureInfo("vi-VN");
+        return string.Format(culture, "{0:C0}", amount);
+    }
+}
+<header class="page-header">
+    <h2 class="page-title">
+        <section
+            class="elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+            data-element_type="section">
+            <div class="elementor-container elementor-column-gap-default">
+                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                    data-element_type="column">
+                    <div class="elementor-widget-wrap elementor-element-populated">
+                        <div class="elementor-element find-a-job-heading-jobiify-skin-2 elementor-widget elementor-widget-heading "
+                            data-element_type="widget" data-widget_type="heading.default">
+                            <div
+                                class="elementor-widget-container d-flex align-items-center justify-content-center w-100">
+                                <h1 class="elementor-heading-title elementor-size-default">Tìm kiếm <span
+                                        class="blue-highlight">việc làm</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </h2>
+</header>
+<div data-elementor-type="wp-page" class="elementor">
+    <section
+        class="elementor-section elementor-top-section elementor-element job-listing-jobify-skin-2 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+        data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-widget elementor-widget-elementify-jobs"
+                        data-element_type="widget" data-widget_type="elementify-jobs.default">
+                        <div class="elementor-widget-container">
+                            <div id="primary" role="main">
+                                <div class="container content-area">
+                                    <div class="job_listings" data-location="" data-keywords="" data-show_filters="true"
+                                        data-show_pagination="false" data-per_page="10" data-orderby="featured"
+                                        data-order="DESC" data-categories="" data-disable-form-state-storage=""
+                                        data-post_id="166">
+                                        <form class="job_filters">
+                                            <div class="search_jobs">
+                                                <div class="search_keywords">
+                                                    <label for="search_keywords">Từ khóa</label>
+                                                    <input type="text" name="search_keywords" id="search_keywords"
+                                                        placeholder="Từ khóa" value="" />
+                                                </div>
+                                                <div class="search_location">
+                                                    <label for="search_location">Địa điểm</label>
+                                                    <input type="text" name="search_location" id="search_location"
+                                                        placeholder="Địa điểm" value="" />
+                                                </div>
+                                                <div class="search_categories">
+                                                    <label for="search_categories">Ngành nghề</label>
+                                                    <select id='search_categories' class='form-select'>
+                                                        <option value="">Chọn ngành nghề</option>
+                                                        @foreach (var cate in ViewBag.Categories)
+                                                        {
+                                                            <option class="level-0" value="@cate.iCategoryID">
+                                                                @cate.sCategoryName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                                <div class="search_submit">
+                                                    <input type="submit" name="submit" value="Search">
+                                                </div>
+                                            </div>
+                                            <ul class="job_types">
+                                                <li><label for="job_type_freelance" class="freelance"><input
+                                                            type="checkbox" name="filter_job_type[]" value="freelance"
+                                                            checked='checked' id="job_type_freelance" />
+                                                        freelance</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" name="filter_job_type[]" value="full-time"
+                                                        checked='checked' id="job_type_full-time" />
+                                                    <label for="job_type_full-time" class="full-time">Toàn thời
+                                                        gian</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" name="filter_job_type[]" value="internship"
+                                                        checked='checked' id="job_type_internship" />
+                                                    <label for="job_type_internship" class="internship">
+                                                        Thực tập</label>
+                                                </li>
+                                                <li>
+                                                    <input type="checkbox" name="filter_job_type[]" value="part-time"
+                                                        checked='checked' id="job_type_part-time" />
+                                                    <label for="job_type_part-time" class="part-time">
+                                                        Bán thời gian</label>
+                                                </li>
+                                            </ul>
+                                            <input type="hidden" name="filter_job_type[]" value="" />
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div><!-- #primary -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mb-3">
+        @* Danh sách việc *@
+        <div class="elementor-element  featured-job-jobify-skin-2  elementor-widget elementor-widget-wp-widget-widget_featured_jobs"
+            data-element_type="widget" data-widget_type="wp-widget-widget_featured_jobs.default">
+            <div class="elementor-widget-container">
+                <div class="job_manager widget_featured_jobs">
+                    <ul class="job_listings">
+                        @* Dùng foreach tại đây để list ra danh sách *@
+                        @foreach (var job in ViewBag.Jobs)
+                        {
+                            <li class="job_listing job-type-freelance job_position_featured type-job_listing status-publish has-post-thumbnail hentry job_listing_region-new-york job_listing_type-freelance"
+                                data-title="Web Designer at Squarespace" data-href="job/square-web-designer/index.html">
+                                <a asp-controller="JobClient" asp-action="DetailJob" asp-route-id="@job.iJobID"
+                                    class="job_listing-clickbox"></a>
+                                <div class="job_listing-logo">
+                                    <img class="company_logo" src="@job.TblCompany.sPhotoCompany"
+                                        alt="@job.sNameJob &#8211; @job.TblCategory.sCategoryName" />
+                                </div>
+                                <div class="job_listing-about">
+                                    <div class="job_listing-position job_listing__column">
+                                        <h3 class="job_listing-title">@job.sNameJob</h3>
+
+                                        <div class="job_listing-company">
+                                            <strong>@job.TblCategory.sCategoryName</strong>
+                                        </div>
+                                    </div>
+                                    <div class="job_listing-location job_listing__column">
+                                        <a class="google_map_link" target="_blank">@job.TblCompany.sAddressCompany</a>
+                                    </div>
+                                    <div class="mb-2" style="color: green; font-size: 15px; font-weight: 600;">
+                                        Lương: ~ @FormatToVND(job.fSalaryJob)
+                                    </div>
+                                    <ul class="job_listing-meta job_listing__column">
+                                        <li class="job_listing-type job-type">@job.sTypeJob
+                                        </li>
+                                        <li class="job_listing-date">Đăng @GetRelativeTime(job.dPostedDate)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* Load thêm *@
+        <div class="elementor-element elementor-element-ddb1c10 elementor-align-center elementor-widget elementor-widget-button"
+            data-id="ddb1c10" data-element_type="widget" data-widget_type="button.default">
+            <div class="elementor-widget-container">
+                <div class="elementor-button-wrapper">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="find-a-job/index.html">
+                        <span class="elementor-button-content-wrapper">
+                            <span class="elementor-button-text">Hiện thêm</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<script>
+</script>

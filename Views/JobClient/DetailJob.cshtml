@@ -1,0 +1,312 @@
+@{
+    ViewData["Title"] = "Detail";
+    var description = ViewBag.job.sDescriptionJob.Replace("\n", "<br>");
+}
+
+@functions {
+    public string GetRelativeTime(DateTime postedDate)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan timeDiff = now - postedDate;
+
+        if (timeDiff.TotalHours < 24 && now.Date == postedDate.Date)
+        {
+            int hours = (int)timeDiff.TotalHours;
+            return $"{hours} giờ trước";
+        }
+        else
+        {
+            return postedDate.ToString("dd/MM/yyyy");
+        }
+    }
+}
+<div class="single_job_listing">
+    <div class="page-header">
+        <h1 class="page-title">
+            @ViewBag.job.sNameJob &#8211; @ViewBag.job.TblCategory.sCategoryName </h1>
+        <h3 class="page-subtitle">
+            <ul class="job-listing-meta meta">
+                <li class="job-type full-time">@ViewBag.job.sTypeJob</li>
+                <li class="location">, @ViewBag.job.TblCompany.sNameCompany</a></li>
+                <li class="date-posted">Đăng @GetRelativeTime(ViewBag.job.dPostedDate)</li>
+                <li class="job-company">
+                    <a href="#" target="_blank">@ViewBag.job.sNameJob &#8211; @ViewBag.job.TblCategory.sCategoryName</a>
+                </li>
+            </ul>
+        </h3>
+    </div>
+    <div id="content" class="container content-area" role="main">
+        <div class="job-meta-top row">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <aside
+                    class="widget widget--job_listing widget--job_listing-top d-flex align-items-center justify-content-center">
+                    <a href="#" target="_blank">
+                        <img class="company_logo" src="@ViewBag.job.TblCompany.sPhotoCompany"
+                            alt="@ViewBag.job.sNameJob &#8211; @ViewBag.job.TblCategory.sCategoryName" />
+                    </a>
+                </aside>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <aside class="widget widget--job_listing widget--job_listing-top">
+                    <h3 class="widget-title widget-title--job_listing widget-title--job_listing-top">
+                        Phân loại</h3>
+                    <div class="job_listing-categories">
+                        <a href="#" class="job-category">@ViewBag.job.TblCategory.sCategoryName</a>
+                    </div>
+                </aside>
+            </div>
+            <div class="col-md-5 col-sm-6 col-xs-12">
+                <aside class="widget widget--job_listing widget--job_listing-top">
+                    <h3 class="widget-title widget-title--job_listing widget-title--job_listing-top">
+                        Mô tả doanh nghiệp
+                    </h3>
+                    <ul class="job_listing-company-social company-social">
+                        <li>
+                            <a href="" target="_blank" class="job_listing-facebook">
+                                Facebook
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <aside class="widget widget--job_listing widget--job_listing-top">
+                    <div class="job_application application" style="display: inline-block; margin-right: 10px;">
+                        <input type="button" name="apply_Job" class="application_button button" value="Ứng tuyển" />
+                    </div>
+                    <div class="job_application application" style="display: inline-block;">
+                        <input type="button" name="save_Job" id="save_Job" class="save_button button"
+                            value="@(ViewBag.IsJobSaved ?? false ? "Đã lưu công việc" : "Lưu công việc")"
+                            data-job-id="@ViewBag.job.iJobID" />
+                    </div>
+
+
+                </aside>
+
+            </div>
+        </div>
+        <div class="job-overview-content row">
+            <div class="job_listing-description job-overview col-md-12 col-sm-12">
+                <h2 class="widget-title widget-title--job_listing-top job-overview-title">Tổng quan</h2>
+                <h4>Mô tả doanh nghiệp</h4>
+                <p>@ViewBag.job.TblCompany.sDescriptionCompany</p>
+                <h3>Mô tả công việc </h3>
+                <p>@Html.Raw(description)</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="modalBackdrop" class="modal-backdrop-custom" style="display: none;"></div>
+<div id="applyModal" class="application_details modal" style="position: fixed; top: 20px; left: 0px;
+right: 0px; background-color: white; height: auto; z-index: 1000;">
+    <button type="button" class="close" style="position: absolute; top: 20px; right: 20px;" data-dismiss="modal"
+        aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <form class="job-manager-application-form job-manager-form" method="post" enctype="multipart/form-data">
+        <h2 class="modal-title">Ứng tuyển </h2>
+        <fieldset class="fieldset-candidate_name">
+            <label for="candidate_name">Họ và tên </label>
+            <div class="field required-field">
+                <input type="text" class="input-text" name="candidate_name" id="candidate_name" placeholder="" value=""
+                    maxlength="" required />
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-candidate_email">
+            <label for="candidate_email">Địa chỉ email</label>
+            <div class="field required-field">
+                <input type="text" class="input-text" name="candidate_email" id="candidate_email" placeholder=""
+                    value="" maxlength="" required />
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-application_message">
+            <label for="application_message">Thư giới thiệu</label>
+            <div class="field required-field">
+                <textarea cols="20" rows="3" class="input-text" name="application_message" id="application_message"
+                    placeholder="Your cover letter/message sent to the employer" maxlength="" required></textarea>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-application_attachment">
+            <label for="application_attachment">Thêm CV
+                <small>(không bắt buộc)</small></label>
+            <div class="field ">
+                <label for="application_attachment" class="file-field-label">
+                    <div class="job-manager-uploaded-files">
+                    </div>
+
+                    <input type="file" class="input-text listify-file-upload"
+                        data-file_types="jpg|jpeg|jpe|png|gif|webp|mov|qt|avi|mpeg|mpg|mpe|3gp|3gpp|3g2|3gp2|mid|midi|pdf|doc|docx|docm|pot|pps|ppt|pptx|pptm|odt|ppsx|ppsm|xla|xls|xlt|xlw|xlsx|xlsm|xlsb|key|mp3|m4a|m4b|ogg|oga|flac|wav|mp4|m4v|webm|ogv|flv"
+                        multiple name="application_attachment[]" data-multiple-caption="%d files selected"
+                        id="application_attachment" placeholder="" />
+
+                    <span class="button button--size-medium">
+                        Chọn tệp </span>
+                </label>
+
+                <small class="description file-field-description">
+                    Đăng CV của bạn hoặc những tệp liên quan. Tối đa: 1MB.
+                </small>
+            </div>
+        </fieldset>
+        <p>
+            <input type="submit" class="button wp_job_manager_send_application_button" value="Gửi đơn ứng tuyển"
+                onclick="ApplyJob(event)" />
+            <input id="btn_close" type="button" class="application_button button" value="Hủy" />
+            <input type="hidden" name="wp_job_manager_send_application" value="1" />
+            <input type="hidden" name="job_id" value="@ViewBag.job.iJobID" />
+        </p>
+    </form>
+</div>
+
+<script>
+    async function ApplyJob(event) {
+        event.preventDefault();
+        const jobId = document.querySelector("input[name='job_id']").value;
+        const applicationMessage = document.getElementById("application_message").value;
+
+        const payload = {
+            jobID: jobId,
+            message: applicationMessage
+        };
+
+        try {
+            const response = await fetch("/api/job/apply", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert("Ứng tuyển thành công!");
+                document.querySelector("input[name='apply_Job']").value = "Đã ứng tuyển";
+                hideModal()
+            } else {
+                const error = await response.text();
+                alert("Có lỗi xảy ra: " + error);
+            }
+        } catch (error) {
+            console.error("Fetch error: ", error);
+            alert("Có lỗi xảy ra khi gửi ứng tuyển!");
+        }
+    }
+
+
+
+    function showModal() {
+        document.getElementById("applyModal").style.display = "block";
+        document.getElementById("modalBackdrop").style.display = "block";
+    }
+    // Ẩn modal và backdrop
+    function hideModal() {
+        console.log("Check hide");
+        document.getElementById("applyModal").style.display = "none";
+        document.getElementById("modalBackdrop").style.display = "none";
+    }
+    document.querySelector(".application_button").addEventListener("click", function () {
+        // Kiểm tra trạng thái đăng nhập (thông qua ViewBag hoặc API backend)
+        const isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower(); // true/false từ Razor
+
+        if (isAuthenticated) {
+            // Hiển thị modal Apply
+            showModal();
+        } else {
+            // Chuyển đến trang đăng nhập
+            const confirmLogin = confirm("Bạn cần đăng nhập để ứng tuyển. Bạn có muốn đăng nhập không?");
+            if (confirmLogin) {
+                // Chuyển đến trang đăng nhập
+                window.location.href = "/Account/Login";
+            }
+        }
+    });
+
+    // Lưu công việc
+
+    async function saveJob(event) {
+        event.preventDefault();
+        const jobId = document.querySelector("input[name='save_Job']").getAttribute('data-job-id'); // Lấy ID công việc từ thuộc tính data
+
+        const payload = {
+            jobID: jobId
+        };
+
+        try {
+            const response = await fetch("/api/job/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert("Công việc đã được lưu!");
+                document.querySelector("input[name='save_Job']").value = "Đã lưu công việc"; // Cập nhật giá trị nút
+            } else {
+                const error = await response.text();
+                alert("Có lỗi xảy ra khi lưu công việc: " + error);
+            }
+        } catch (error) {
+            console.error("Fetch error: ", error);
+            alert("Có lỗi xảy ra khi lưu công việc!");
+        }
+    }
+    // Hủy lưu công việc
+    async function unsaveJob(event) {
+        event.preventDefault();
+        const jobId = document.querySelector("input[name='save_Job']").getAttribute('data-job-id'); // Lấy ID công việc từ thuộc tính data
+
+        const payload = {
+            jobID: jobId
+        };
+
+        try {
+            const response = await fetch("/api/job/unsave", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(result.message); // Thông báo hủy lưu thành công
+                document.querySelector("input[name='save_Job']").value = "Lưu công việc"; // Thay đổi nút thành "Lưu công việc"
+            } else {
+                const error = await response.text();
+                alert("Có lỗi xảy ra khi hủy lưu công việc: " + error);
+            }
+        } catch (error) {
+            console.error("Fetch error: ", error);
+            alert("Có lỗi xảy ra khi hủy lưu công việc!");
+        }
+    }
+
+    // Lắng nghe sự kiện "Đã lưu công việc"
+    document.querySelector(".save_button").addEventListener("click", function (event) {
+        const jobStatus = document.querySelector("input[name='save_Job']").value;
+
+        // Nếu công việc đã lưu, hủy lưu công việc
+        if (jobStatus === "Đã lưu công việc") {
+            unsaveJob(event);
+        } else {
+            // Nếu chưa lưu, tiến hành lưu công việc (sử dụng saveJob() đã có)
+            saveJob(event);
+        }
+    });
+
+    // Đóng modal
+    document.querySelector(".modal .close").addEventListener("click", hideModal);
+    document.getElementById("btn_close").addEventListener("click", hideModal);
+    document.getElementById("modalBackdrop").addEventListener("click", hideModal);
+    // Xử lý gửi form
+    document.getElementById("applyForm").addEventListener("submit", function (event) {
+        event.preventDefault();
+        // Xử lý gửi thông tin ứng tuyển qua API hoặc backend
+        alert("Application submitted successfully!");
+        document.getElementById("applyModal").style.display = "none";
+    });
+
+</script>

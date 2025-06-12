@@ -1,0 +1,285 @@
+@{
+    ViewData["Title"] = "JobInCompany";
+    var jobInCompany = ViewBag.jobInCompany as IEnumerable<dynamic>; // Định dạng danh sách ứng tuyển
+}
+<script>
+    // Hiển thị modal với dữ liệu từ API
+    function openModal(data) {
+        // Hiển thị modal và backdrop
+        document.getElementById('jobDetailModal').style.display = 'block';
+        document.getElementById('modalBackdrop').style.display = 'block';
+
+        // Gán dữ liệu vào các trường trong modal
+        document.getElementById('candidate_name').value = data.nameJob;
+        document.getElementById('candidate_description').value = data.descriptionJob;
+        document.getElementById('candidate_salary').value = data.salaryJob;
+        document.getElementById('candidate_type').value = data.typeJob;
+        document.getElementById('candidate_postdate').value = data.postedDate;
+        document.getElementById('candidate_expirydate').value = data.expiryDate;
+        document.getElementById('candidate_category').value = data.categoryName;
+        document.getElementById('candidate_applicants').value = data.applicants;
+
+        // Tắt scroll của trang khi modal hiển thị
+        document.body.style.overflow = 'hidden';
+    }
+    function openModalAdd() {
+        document.getElementById('jobAddModal').style.display = 'block';
+        document.getElementById('modalBackdrop').style.display = 'block';
+    }
+    // Ẩn modal
+    function closeModal() {
+        // Ẩn modal và backdrop
+        document.getElementById('jobDetailModal').style.display = 'none';
+        document.getElementById('jobAddModal').style.display = 'none';
+        document.getElementById('modalBackdrop').style.display = 'none';
+
+        // Bật lại scroll của trang
+        document.body.style.overflow = '';
+    }
+    async function addJob(event) {
+        // Lấy dữ liệu từ các trường nhập liệu trong modal jobAddModal
+        event.preventDefault();
+        const jobData = {
+            iCategoryID: document.getElementById('candidate_category_add').value, // Phân loại công việc
+            sNameJob: document.getElementById('candidate_name_add').value, // Tên công việc
+            fSalaryJob: parseFloat(document.getElementById('candidate_salary_add').value), // Lương
+            sTypeJob: document.getElementById('candidate_type_add').value, // Hình thức công việc
+            dExpiryDate: document.getElementById('candidate_expirydate_add').value, // Ngày hết hạn
+            sDescriptionJob: document.getElementById('candidate_description_add').value // Mô tả công việc
+        };
+
+        try {
+            // Gửi dữ liệu lên API
+            const response = await fetch('/api/job/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jobData)
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                alert(result.message); // Hiển thị thông báo thành công
+                console.log("ID công việc:", result.jobId);
+                closeModal(); // Đóng modal sau khi thêm công việc thành công
+            } else {
+                alert(result.message || "Thêm việc thất bại."); // Hiển thị thông báo lỗi
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert("Có lỗi xảy ra!"); // Thông báo lỗi trong trường hợp có sự cố
+        }
+    }
+    // Gọi API để lấy chi tiết công việc
+    async function getJobDetails(jobId) {
+        try {
+            // Gọi API để lấy chi tiết công việc
+            const response = await fetch(`/api/job/getJobDetail/${jobId}`);
+            if (!response.ok) {
+                throw new Error('Không tìm thấy thông tin công việc.');
+            }
+            const data = await response.json(); // Parse JSON từ API
+            console.log("data.....", data)
+            openModal(data); // Hiển thị modal với dữ liệu nhận được
+        } catch (error) {
+            alert(error.message);
+            console.error(error);
+        }
+    }
+</script>
+<header class="page-header">
+    <h2 class="page-title">
+        Danh sách công việc
+    </h2>
+</header>
+@if (ViewBag.jobInCompany != null && jobInCompany.Any())
+{
+    <div class="p-5">
+        <input onclick="openModalAdd()" type="submit" class="button wp_job_manager_send_application_button mb-3"
+            value="Thêm công việc" />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên việc</th>
+                    <th>Ngày đăng</th>
+                    <th>Hạn</th>
+                    <th>Lương</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var job in ViewBag.jobInCompany)
+                {
+                    <tr>
+                        <td>@job.iJobID</td>
+                        <td>@job.sNameJob</td>
+                        <td>@(((DateTime)job.dPostedDate).ToString("dd/MM/yyyy"))</td>
+                        <td>@(((DateTime)job.dExpiryDate).ToString("dd/MM/yyyy"))</td>
+                        <td>@string.Format("{0:C}", job.fSalaryJob)</td>
+                        <td>
+                            <input onclick='getJobDetails(@job.iJobID)' type="button" class="application_button button"
+                                value="Xem chi tiết" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div id="primary" class="content-area container" role="main">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <article id="post-67" class="post-67 page type-page status-publish hentry">
+                    <div class="entry-content">
+                        <div id="job-manager-job-dashboard">
+                            <p class="account-sign-in">Hiện công ty chưa đăng công việc nào.
+                            </p>
+                        </div>
+                    </div>
+                </article><!-- #post -->
+            </div>
+        </div>
+    </div>
+}
+<div id="modalBackdrop" class="modal-backdrop-custom" style="display: none;" onclick="closeModal()"></div>
+<div id="jobDetailModal" class="application_details modal" style="position: fixed; top: 20px; left: 0px;
+right: 0px; background-color: white; height: auto; z-index: 1000;">
+    <button type="button" class="close" style="position: absolute; top: 20px; right: 20px;" data-dismiss="modal"
+        aria-label="Close" onclick="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <form class="job-manager-application-form job-manager-form" enctype="multipart/form-data">
+        <h2 class="modal-title">Thông tin công việc</h2>
+        <div style="height: 60vh; overflow: auto;">
+            <fieldset class="fieldset-candidate_name">
+                <label for="candidate_name">Tên công việc </label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_name" id="candidate_name" placeholder=""
+                        value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_name">
+                <label for="candidate_description">Mô tả công việc</label>
+                <div class="field required-field">
+                    <textarea cols="20" rows="10" type="text" class="input-text" name="candidate_description"
+                        id="candidate_description" placeholder="" value="" maxlength="" readonly></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_salary">Lương</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_salary" id="candidate_salary" placeholder=""
+                        value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_type">Hình thức</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_type" id="candidate_type" placeholder=""
+                        value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_postdate">Ngày đăng</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_postdate" id="candidate_postdate"
+                        placeholder="" value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_expirydate">Hạn</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_expirydate" id="candidate_expirydate"
+                        placeholder="" value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_category">Phân loại</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_category" id="candidate_category"
+                        placeholder="" value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_applicants">Số người nộp</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_applicants" id="candidate_applicants"
+                        placeholder="" value="" maxlength="" readonly />
+                </div>
+            </fieldset>
+        </div>
+
+        <p>
+            <input type="submit" class="button wp_job_manager_send_application_button" value="Xác nhận" />
+            <input id="btn_close" type="button" class="application_button button" value="Hủy" onclick="closeModal()" />
+            <input type="hidden" name="wp_job_manager_send_application" value="1" />
+        </p>
+    </form>
+</div>
+<div id="jobAddModal" class="application_details modal" style="position: fixed; top: 20px; left: 0px;
+right: 0px; background-color: white; height: auto; z-index: 1000; width: 1000px;">
+    <button type="button" class="close" style="position: absolute; top: 20px; right: 20px;" data-dismiss="modal"
+        aria-label="Close" onclick="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <form class="job-manager-application-form job-manager-form" enctype="multipart/form-data">
+        <h2 class="modal-title">Thêm công việc</h2>
+        <div style="height: 60vh; overflow: auto;">
+            <fieldset class="fieldset-candidate_name">
+                <label for="candidate_name_add">Tên công việc </label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_name_add" id="candidate_name_add"
+                        placeholder="" value="" maxlength="" required />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_name">
+                <label for="candidate_description_add">Mô tả công việc</label>
+                <div class="field required-field">
+                    <textarea cols="20" rows="10" type="text" class="input-text" name="candidate_description_add"
+                        id="candidate_description_add" placeholder="" value="" maxlength="" required></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_salary_add">Lương</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_salary_add" id="candidate_salary_add"
+                        placeholder="" value="" maxlength="" required />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_type_add">Hình thức</label>
+                <div class="field required-field">
+                    <input type="text" class="input-text" name="candidate_type_add" id="candidate_type_add"
+                        placeholder="" value="" maxlength="" required />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_expirydate_add">Hạn</label>
+                <div class="field required-field">
+                    <input type="date" class="input-text" name="candidate_expirydate_add" id="candidate_expirydate_add"
+                        placeholder="" value="" maxlength="" required />
+                </div>
+            </fieldset>
+            <fieldset class="fieldset-candidate_email">
+                <label for="candidate_category_add">Phân loại</label>
+                <select class="field required-field" name="candidate_category_add" id="candidate_category_add" required>
+                    <option value="">Chọn phân loại công việc</option>
+                    @foreach (var category in ViewBag.Categories)
+                    {
+                        <option value="@category.iCategoryID">@category.sCategoryName</option>
+                    }
+                </select>
+            </fieldset>
+        </div>
+        <p>
+            <input onclick="addJob(event)" type="submit" class="button wp_job_manager_send_application_button"
+                value="Thêm" />
+            <input id="btn_close" type="button" class="application_button button" value="Hủy" onclick="closeModal()" />
+        </p>
+    </form>
+</div>

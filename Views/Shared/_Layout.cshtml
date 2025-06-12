@@ -1,0 +1,1112 @@
+﻿@using System.Security.Claims
+<!DOCTYPE html>
+<html lang="en-US">
+
+<!-- Mirrored from jobify-demos.astoundify.com/skin-2/ by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Oct 2024 13:50:23 GMT -->
+<!-- Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MVC04</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style type="text/css">
+        img.wp-smiley,
+        img.emoji {
+        display: inline !important;
+        border: none !important;
+        box-shadow: none !important;
+        height: 1em !important;
+        width: 1em !important;
+        margin: 0 0.07em !important;
+        vertical-align: -0.1em !important;
+        background: none !important;
+        padding: 0 !important;
+        }
+    </style>
+    <style id='global-styles-inline-css' type='text/css'>
+        body {
+        --wp--preset--color--black: #000000;
+        --wp--preset--color--cyan-bluish-gray: #abb8c3;
+        --wp--preset--color--white: #ffffff;
+        --wp--preset--color--pale-pink: #f78da7;
+        --wp--preset--color--vivid-red: #cf2e2e;
+        --wp--preset--color--luminous-vivid-orange: #ff6900;
+        --wp--preset--color--luminous-vivid-amber: #fcb900;
+        --wp--preset--color--light-green-cyan: #7bdcb5;
+        --wp--preset--color--vivid-green-cyan: #00d084;
+        --wp--preset--color--pale-cyan-blue: #8ed1fc;
+        --wp--preset--color--vivid-cyan-blue: #0693e3;
+        --wp--preset--color--vivid-purple: #9b51e0;
+        --wp--preset--gradient--vivid-cyan-blue-to-vivid-purple: linear-gradient(135deg, rgba(6, 147, 227, 1) 0%, rgb(155, 81, 224) 100%);
+        --wp--preset--gradient--light-green-cyan-to-vivid-green-cyan: linear-gradient(135deg, rgb(122, 220, 180) 0%, rgb(0, 208, 130) 100%);
+        --wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange: linear-gradient(135deg, rgba(252, 185, 0, 1) 0%, rgba(255, 105, 0, 1) 100%);
+        --wp--preset--gradient--luminous-vivid-orange-to-vivid-red: linear-gradient(135deg, rgba(255, 105, 0, 1) 0%, rgb(207, 46, 46) 100%);
+        --wp--preset--gradient--very-light-gray-to-cyan-bluish-gray: linear-gradient(135deg, rgb(238, 238, 238) 0%, rgb(169, 184, 195) 100%);
+        --wp--preset--gradient--cool-to-warm-spectrum: linear-gradient(135deg, rgb(74, 234, 220) 0%, rgb(151, 120, 209) 20%, rgb(207, 42, 186) 40%, rgb(238, 44, 130) 60%, rgb(251, 105, 98) 80%, rgb(254, 248, 76) 100%);
+        --wp--preset--gradient--blush-light-purple: linear-gradient(135deg, rgb(255, 206, 236) 0%, rgb(152, 150, 240) 100%);
+        --wp--preset--gradient--blush-bordeaux: linear-gradient(135deg, rgb(254, 205, 165) 0%, rgb(254, 45, 45) 50%, rgb(107, 0, 62) 100%);
+        --wp--preset--gradient--luminous-dusk: linear-gradient(135deg, rgb(255, 203, 112) 0%, rgb(199, 81, 192) 50%, rgb(65, 88, 208) 100%);
+        --wp--preset--gradient--pale-ocean: linear-gradient(135deg, rgb(255, 245, 203) 0%, rgb(182, 227, 212) 50%, rgb(51, 167, 181) 100%);
+        --wp--preset--gradient--electric-grass: linear-gradient(135deg, rgb(202, 248, 128) 0%, rgb(113, 206, 126) 100%);
+        --wp--preset--gradient--midnight: linear-gradient(135deg, rgb(2, 3, 129) 0%, rgb(40, 116, 252) 100%);
+        --wp--preset--duotone--dark-grayscale: url('#wp-duotone-dark-grayscale');
+        --wp--preset--duotone--grayscale: url('#wp-duotone-grayscale');
+        --wp--preset--duotone--purple-yellow: url('#wp-duotone-purple-yellow');
+        --wp--preset--duotone--blue-red: url('#wp-duotone-blue-red');
+        --wp--preset--duotone--midnight: url('#wp-duotone-midnight');
+        --wp--preset--duotone--magenta-yellow: url('#wp-duotone-magenta-yellow');
+        --wp--preset--duotone--purple-green: url('#wp-duotone-purple-green');
+        --wp--preset--duotone--blue-orange: url('#wp-duotone-blue-orange');
+        --wp--preset--font-size--small: 13px;
+        --wp--preset--font-size--medium: 20px;
+        --wp--preset--font-size--large: 36px;
+        --wp--preset--font-size--x-large: 42px;
+        }
+
+        .has-black-color {
+        color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-color {
+        color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-color {
+        color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-color {
+        color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-color {
+        color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-color {
+        color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-color {
+        color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-color {
+        color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-color {
+        color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-color {
+        color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-color {
+        color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-color {
+        color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-background-color {
+        background-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-background-color {
+        background-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-background-color {
+        background-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-background-color {
+        background-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-background-color {
+        background-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-background-color {
+        background-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-background-color {
+        background-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-background-color {
+        background-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-background-color {
+        background-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-background-color {
+        background-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-background-color {
+        background-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-background-color {
+        background-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-black-border-color {
+        border-color: var(--wp--preset--color--black) !important;
+        }
+
+        .has-cyan-bluish-gray-border-color {
+        border-color: var(--wp--preset--color--cyan-bluish-gray) !important;
+        }
+
+        .has-white-border-color {
+        border-color: var(--wp--preset--color--white) !important;
+        }
+
+        .has-pale-pink-border-color {
+        border-color: var(--wp--preset--color--pale-pink) !important;
+        }
+
+        .has-vivid-red-border-color {
+        border-color: var(--wp--preset--color--vivid-red) !important;
+        }
+
+        .has-luminous-vivid-orange-border-color {
+        border-color: var(--wp--preset--color--luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-amber-border-color {
+        border-color: var(--wp--preset--color--luminous-vivid-amber) !important;
+        }
+
+        .has-light-green-cyan-border-color {
+        border-color: var(--wp--preset--color--light-green-cyan) !important;
+        }
+
+        .has-vivid-green-cyan-border-color {
+        border-color: var(--wp--preset--color--vivid-green-cyan) !important;
+        }
+
+        .has-pale-cyan-blue-border-color {
+        border-color: var(--wp--preset--color--pale-cyan-blue) !important;
+        }
+
+        .has-vivid-cyan-blue-border-color {
+        border-color: var(--wp--preset--color--vivid-cyan-blue) !important;
+        }
+
+        .has-vivid-purple-border-color {
+        border-color: var(--wp--preset--color--vivid-purple) !important;
+        }
+
+        .has-vivid-cyan-blue-to-vivid-purple-gradient-background {
+        background: var(--wp--preset--gradient--vivid-cyan-blue-to-vivid-purple) !important;
+        }
+
+        .has-light-green-cyan-to-vivid-green-cyan-gradient-background {
+        background: var(--wp--preset--gradient--light-green-cyan-to-vivid-green-cyan) !important;
+        }
+
+        .has-luminous-vivid-amber-to-luminous-vivid-orange-gradient-background {
+        background: var(--wp--preset--gradient--luminous-vivid-amber-to-luminous-vivid-orange) !important;
+        }
+
+        .has-luminous-vivid-orange-to-vivid-red-gradient-background {
+        background: var(--wp--preset--gradient--luminous-vivid-orange-to-vivid-red) !important;
+        }
+
+        .has-very-light-gray-to-cyan-bluish-gray-gradient-background {
+        background: var(--wp--preset--gradient--very-light-gray-to-cyan-bluish-gray) !important;
+        }
+
+        .has-cool-to-warm-spectrum-gradient-background {
+        background: var(--wp--preset--gradient--cool-to-warm-spectrum) !important;
+        }
+
+        .has-blush-light-purple-gradient-background {
+        background: var(--wp--preset--gradient--blush-light-purple) !important;
+        }
+
+        .has-blush-bordeaux-gradient-background {
+        background: var(--wp--preset--gradient--blush-bordeaux) !important;
+        }
+
+        .has-luminous-dusk-gradient-background {
+        background: var(--wp--preset--gradient--luminous-dusk) !important;
+        }
+
+        .has-pale-ocean-gradient-background {
+        background: var(--wp--preset--gradient--pale-ocean) !important;
+        }
+
+        .has-electric-grass-gradient-background {
+        background: var(--wp--preset--gradient--electric-grass) !important;
+        }
+
+        .has-midnight-gradient-background {
+        background: var(--wp--preset--gradient--midnight) !important;
+        }
+
+        .has-small-font-size {
+        font-size: var(--wp--preset--font-size--small) !important;
+        }
+
+        .has-medium-font-size {
+        font-size: var(--wp--preset--font-size--medium) !important;
+        }
+
+        .has-large-font-size {
+        font-size: var(--wp--preset--font-size--large) !important;
+        }
+
+        .has-x-large-font-size {
+        font-size: var(--wp--preset--font-size--x-large) !important;
+        }
+    </style>
+    <link rel='stylesheet' id='extensify-frontend-style-css'
+    href='~/wp-content/plugins/extensify/includes/frontend/css/jobify/frontendbfbf.css?ver=6.0.9' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='woocommerce-layout-css'
+    href='~/wp-content/plugins/woocommerce/assets/css/woocommerce-layoutcb57.css?ver=7.2.2' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='woocommerce-smallscreen-css'
+    href='~/wp-content/plugins/woocommerce/assets/css/woocommerce-smallscreencb57.css?ver=7.2.2' type='text/css'
+    media='only screen and (max-width: 768px)' />
+    <style id='woocommerce-inline-inline-css' type='text/css'>
+        .woocommerce form .form-row .required {
+        visibility: visible;
+        }
+    </style>
+    <link rel='stylesheet' id='wp-job-manager-company-frontend-css'
+    href='~/wp-content/plugins/wp-job-manager-company-listings/assets/css/frontend.minbfbf.css?ver=6.0.9'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-job-manager-tags-frontend-css'
+    href='~/wp-content/plugins/wp-job-manager-tags/assets/css/stylebfbf.css?ver=6.0.9' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='select2-css'
+    href='~/wp-content/plugins/private-messages/assets/css/select2.min68b3.css?ver=1' type='text/css' media='all' />
+    <link rel='stylesheet' id='elementify-style-css'
+    href='~/wp-content/plugins/elementify/build/custom-stylesbfbf.css?ver=6.0.9' type='text/css' media='all' />
+    <link rel='stylesheet' id='if-menu-site-css-css'
+    href='~/wp-content/plugins/if-menu/assets/if-menu-sitebfbf.css?ver=6.0.9' type='text/css' media='all' />
+    <link rel='stylesheet' id='wc-paid-listings-packages-css'
+    href='~/wp-content/plugins/wp-job-manager-wc-paid-listings/assets/css/packagesbfbf.css?ver=6.0.9'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='wp-job-manager-applications-frontend-css'
+    href='~/wp-content/plugins/wp-job-manager-applications/assets/css/frontendbfbf.css?ver=6.0.9' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='gjm-frontend-css'
+    href='~/wp-content/themes/jobify/inc/includes/assets/css/gjm.frontend.min95b8.css?ver=2.3.2' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='jobify-fonts-css'
+    href='http://fonts.googleapis.com/css?family=Varela+Round%3Aregular%7CMontserrat%3Aregular%2C700&amp;subset=latin,hebrew'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='jobify-parent-css' href='~/wp-content/themes/jobify/style8aee.css?ver=4.1.2'
+    type='text/css' media='all' />
+    <style id='jobify-parent-inline-css' type='text/css'>
+        html,
+        body.jobify-skin-2 .page-header,
+        body.jobify-skin-2 ul.job_listings,
+        body.jobify-skin-2 .woothemes-testimonial p,
+        body.jobify-skin-2 #primary .job_listings form.job_filters .search_jobs,
+        body.jobify-skin-2 .modal .registration-form,
+        body.jobify-skin-2 .modal .woocommerce .woocommerce-customer-login .login,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal .woocommerce-customer-login h2,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal .registration-form.woocommerce form p,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal h2.modal-title,
+        body.jobify-skin-2 .woocommerce-error li,
+        body.jobify-skin-2 .modal .woocommerce {
+        background-color: ##ffffff;
+        }
+
+        body,
+        mark,
+        input,
+        textarea,
+        select,
+        body .chosen-container-single .chosen-single span,
+        body .chosen-container-single .chosen-single div:before,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout .woocommerce-billing-fields p span.select2 span.select2-selection span.select2-selection__rendered,
+        body.jobify-skin-2 .widget--home-testimonials .widget-title--home,
+        body.jobify-skin-2 .widget--home-testimonials .widget-description--home {
+        color: #23232a;
+        }
+
+        a,
+        .job_listing-clickbox:hover {
+        color: #4440da;
+        }
+
+        a:active,
+        a:hover {
+        color: #2b27c1;
+        }
+
+        .site-header,
+        body.jobify-skin-2 input[type=email],
+        body.jobify-skin-2 input[type=password],
+        body.jobify-skin-2 input[type=tel],
+        .nav-menu--primary .sub-menu,
+        body.jobify-skin-2 input[type=number],
+        body.jobify-skin-2 input[type=search],
+        body.jobify-skin-2 input[type=text],
+        body.jobify-skin-2 .payment_methods li .payment_box,
+        body.jobify-skin-2 select,
+        body.jobify-skin-2 textarea,
+        body.jobify-skin-2 .select2-container--default .select2-selection--single .select2-selection__rendered,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset .field.account-sign-in,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset.fieldset-job_category span.select2 span.select2-selection li.select2-search input,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset.fieldset-job_category span.select2 .select2-selection--multiple,
+        body.jobify-skin-2 .mce-container *,
+        body.jobify-skin-2 .company-letters,
+        body.jobify-skin-2 .woocommerce-info,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout .woocommerce-billing-fields p span.select2 span.select2-selection,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout .woocommerce-billing-fields p input,
+        body.jobify-skin-2 .woocommerce .woocommerce-customer-login form.woocommerce-form.woocommerce-form-login p input,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal .registration-form.woocommerce form p input,
+        body.jobify-skin-2 .hero-search .search_jobs,
+        body.jobify-skin-2 .input-text {
+        background: #ffffff;
+        }
+
+        .site-title,
+        .jobify-skin-2 header .site-branding h1.site-title span {
+        color: #23232a;
+        }
+
+        .nav-menu--primary ul li.highlight>a,
+        .nav-menu--primary ul li.login>a {
+        border-color: #23232e;
+        }
+
+        .nav-menu--primary ul li.highlight>a:hover,
+        .nav-menu--primary ul li.login>a:hover {
+        color: #ffffff;
+        background-color: #23232e;
+        border-color: #23232e;
+        }
+
+        .search_jobs,
+        .search_resumes,
+        .cluster div,
+        .job-type,
+        .price-option__title,
+        .entry-header__featured-image:hover .overlay,
+        .widget_price_filter .ui-slider-horizontal .ui-slider-range,
+        .jobify-skin-2 header ul#menu-primary .menu-item:hover a:before,
+        .jobify-skin-2 header ul#menu-primary .menu-item:hover .sub-menu .menu-item a:hover:before,
+        .jobify-skin-2 header ul#menu-primary .current_page_item a:after,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset .field.account-sign-in a.button,
+        body.jobify-skin-2 .blog-archive article.post .entry .entry-summary p a.button:hover,
+        body.jobify-skin-2 .blog-archive .widget-area--sidebar aside.widget_search .wp-block-search .wp-block-search__button:hover,
+        body.jobify-skin-2.single-post .content-area div.comments-area .comment-respond form.comment-form p.form-submit input#submitcomment:hover,
+        body.jobify-skin-2 .woocommerce form.woocommerce-cart-form table.shop_table.cart tbody td.actions button.button:hover,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset .field span.button:hover,
+        body.jobify-skin-2 article .entry-content form.job-manager-form p input.button:hover,
+        body.jobify-skin-3 .nav-menu--primary ul li.login>a:hover,
+        body.jobify-skin-3 .company-sliders .woothemes-testimonial,
+        body.jobify-skin-3 .widget-area--sidebar form.wp-block-search button.wp-block-search__button,
+        body.jobify-skin-3 .job-stats li.job-stat strong,
+        body.jobify-skin-3 .jobify_widget_testimonials .testimonial-slider-wrap .testimonials-list .slick-list p,
+        body.jobify-skin-3 .jobify_testimonialWidget .testimonial-slider-wrap .testimonials-list .slick-list p {
+        background-color: #4440da;
+        }
+
+        .jobify-skin-2 header ul#menu-primary .menu-item:hover a,
+        .job_filters .search_jobs .filter_by_tag a.active,
+        body.jobify-skin-2 .jobify_widget_blog_posts article header.entry-header h3.entry-title a:hover,
+        .jobify-skin-2 header ul#menu-primary .current_page_item a,
+        body.jobify-skin-2 .site-main .content-area ul.companies-overview li.company-group ul li a,
+        body.jobify-skin-2 .site-main .content-area .company-letters a,
+        body.jobify-skin-2 section.jobify_widget_testimonials .testimonials-list button.slick-arrow:hover:before,
+        body.jobify-skin-2 .site-main aside.widget_products ul.product_list_widget li a,
+        body.jobify-skin-2 article .entry-content #job-manager-job-dashboard table.job-manager-jobs tbody td.job_title>a,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset small.description,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset .field span.button,
+        body.jobify-skin-2 article .entry-content form.job-manager-form p input.button,
+        body.jobify-skin-2 article .entry-content #job-manager-job-dashboard table.job-manager-jobs tbody td.job_title ul.job-dashboard-actions li a:hover,
+        body.jobify-skin-3 span.jobify_allow_spanTag {
+        color: #4440da;
+        }
+
+        .cluster div:after,
+        input:focus,
+        .widget_price_filter .ui-slider .ui-slider-handle,
+        .select2-container--default.select2-container--focus .select2-selection--multiple,
+        body.jobify-skin-2 .woothemes-testimonial cite.woothemes-testimonial--individual__author img,
+        body.jobify-skin-2 .blog-archive article.post .entry .entry-summary p a.button,
+        body.jobify-skin-2 .blog-archive .widget-area--sidebar aside.widget_search .wp-block-search .wp-block-search__button,
+        body.jobify-skin-2.single-post .content-area div.comments-area .comment-respond form.comment-form p.form-submit input#submitcomment,
+        body.jobify-skin-2.woocommerce-shop ul.products li.product a.button.add_to_cart_button,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout div.woocommerce-checkout-review-order div.woocommerce-checkout-payment ul li,
+        body.jobify-skin-2 .woocommerce .woocommerce-form-coupon-toggle .woocommerce-info,
+        body.jobify-skin-2 ul.woocommerce-error li,
+        body.jobify-skin-2 .woocommerce nav.woocommerce-MyAccount-navigation ul li.is-active a,
+        body.jobify-skin-2 article .entry-content form.job-manager-form fieldset .field span.button,
+        body.jobify-skin-2 article .entry-content form.job-manager-form p input.button,
+        body.jobify-skin-3 .nav-menu--primary ul li.login>a,
+        body.jobify-skin-3 .woocommerce .woocommerce-info,
+        body.jobify-skin-3 .woocommerce-info,
+        body.jobify-skin-3 .woocommerce-message,
+        body.jobify-skin-3 .jobify_widget_jobs .recent-jobs ul.job_listings li.job_listing {
+        border-color: #4440da;
+        }
+
+        ul.job_listings .job_listing:hover,
+        .job_position_featured,
+        li.type-resume:hover {
+        box-shadow: inset 5px 0 0 #4440da;
+        }
+
+        .button,
+        input[type=button],
+        button,
+        #submitcomment,
+        #commentform input[type=submit],
+        .widget--footer input[type=submit],
+        .mfp-close-btn-in .mfp-close,
+        input[name=wp_job_manager_send_application],
+        input[name=wp_job_manager_edit_application],
+        input[name=submit_bookmark],
+        .add-favorite,
+        .update-favorite,
+        #rcp_submit,
+        input[name=wp_job_manager_resumes_apply_with_resume],
+        input[name=wp_job_manager_resumes_apply_with_resume_create],
+        .wpcf7-submit,
+        input[type=submit].ninja-forms-field,
+        input[name=submit-job-alert],
+        .hero-search .search_jobs>div input[type=submit],
+        .hero-search .search_resumes>div input[type=submit],
+        body.jobify-skin-2 .woocommerce .woocommerce-customer-login form.woocommerce-form.woocommerce-form-login p button.woocommerce-button:hover,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal button.mfp-close:hover,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal .registration-form.woocommerce form p.woocomerce-FormRow input.woocommerce-Button.button:hover {
+        background-color: #4440da;
+        border-color: transparent;
+        color: #fff;
+        }
+
+        .button:hover,
+        input[type=button]:hover,
+        button:hover,
+        .job-manager-pagination a:hover,
+        .job-manager-pagination span:hover,
+        .page-numbers:hover,
+        #searchform button:hover,
+        #searchform input[type=submit]:hover,
+        #submitcomment:hover,
+        #commentform input[type=submit]:hover,
+        .page-numbers.current,
+        .widget--footer input[type=submit]:hover,
+        .mfp-close-btn-in .mfp-close:hover,
+        input[name=wp_job_manager_send_application]:hover,
+        input[name=wp_job_manager_edit_application]:hover,
+        input[name=submit_bookmark]:hover,
+        .add-favorite:hover,
+        .update-favorite:hover,
+        #rcp_submit:hover,
+        input[name=wp_job_manager_resumes_apply_with_resume]:hover,
+        input[name=wp_job_manager_resumes_apply_with_resume_create]:hover,
+        .wpcf7-submit:hover,
+        input[type=submit].ninja-forms-field:hover,
+        input[name=submit-job-alert]:hover,
+        .tp-caption .button:hover,
+        body.jobify-skin-2 .button:hover,
+        body.jobify-skin-2.woocommerce-shop ul.products li.product a.button.add_to_cart_button:hover,
+        body.jobify-skin-2 .woocommerce form.woocommerce-cart-form table.shop_table.cart tbody td.actions button.button,
+        body.jobify-skin-2 .woocommerce .cart-collaterals .cart_totals .wc-proceed-to-checkout a.checkout-button:hover,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout div.woocommerce-checkout-review-order .place-order button#place_order:hover,
+        body.jobify-skin-2 .wp-block-search .wp-block-search__button,
+        body.jobify-skin-2 .woocommerce .woocommerce-customer-login form.woocommerce-form.woocommerce-form-login p button.woocommerce-button,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal button.mfp-close,
+        body.jobify-skin-2 .mfp-wrap.mfp-ready .mfp-content .modal .registration-form.woocommerce form p.woocomerce-FormRow input.woocommerce-Button.button {
+        background-color: transparent;
+        color: #4440da;
+        border-color: #4440da;
+        }
+
+        .button--type-inverted,
+        .widget--home-video .button,
+        .jobify-skin-2 header ul#menu-primary li.login a,
+        .load_more_jobs strong,
+        .load_more_resumes strong,
+        .job-manager-form.wp-job-manager-bookmarks-form a.bookmark-notice,
+        .job-manager-form.wp-job-manager-favorites-form a.favorite-notice {
+        color: #4440da;
+        border-color: #4440da;
+        }
+
+        .button--type-inverted:hover,
+        .widget--home-video .button:hover,
+        .jobify-skin-2 header ul#menu-primary li.login:hover a,
+        body.jobify-skin-2 .load_more_jobs strong:hover,
+        .load_more_resumes strong:hover,
+        .job-manager-form.wp-job-manager-bookmarks-form a.bookmark-notice:hover,
+        .job-manager-form.wp-job-manager-favorites-form a.favorite-notice:hover,
+        body.jobify-skin-2 #primary .job_listings form.job_filters .search_jobs .search_submit input,
+        body.jobify-skin-2 span.select2-container .select2-results ul li.select2-results__option--highlighted {
+        background-color: #4440da;
+        color: #fff;
+        }
+
+        .button--type-action,
+        .button--type-secondary:hover,
+        .single-product #content .single_add_to_cart_button,
+        .checkout-button,
+        #place_order,
+        input[type=button].application_button,
+        .application_button_link,
+        input[type=button].resume_contact_button,
+        body.jobify-skin-2 .woocommerce .cart-collaterals .cart_totals .wc-proceed-to-checkout a.checkout-button,
+        body.jobify-skin-2 .woocommerce form.checkout.woocommerce-checkout div.woocommerce-checkout-review-order .place-order button#place_order,
+        body.jobify-skin-2 .woocommerce .woocommerce-MyAccount-content .woocommerce-message {
+        color: #4845bf;
+        background-color: transparent;
+        border-color: #4845bf;
+        }
+
+        .button--type-action:hover,
+        .button--type-secondary,
+        .single-product #content .single_add_to_cart_button:hover,
+        .checkout-button:hover,
+        #place_order:hover,
+        input[type=button].application_button:hover,
+        .application_button_link:hover,
+        input[type=button].resume_contact_button:hover {
+        background-color: #4845bf;
+        color: #ffffff;
+        border-color: #4845bf;
+        }
+
+        .button--color-white,
+        .button--color-white.button--type-inverted:hover,
+        .button--type-hover-white:hover {
+        color: #23232a;
+        background-color: #ffffff;
+        border-color: #ffffff;
+        }
+
+        .button--color-white:hover,
+        .button--color-white.button--type-inverted,
+        .button--type-hover-inverted-white:hover {
+        background-color: transparent;
+        color: #ffffff;
+        border-color: #ffffff;
+        }
+
+        body.jobify-skin-3.blog article.post.type-post,
+        body.jobify-skin-3 form.job_filters ul.job_types,
+        body.jobify-skin-3 .jobify_widget_stats .job-stats li.job-stat,
+        body.jobify-skin-3 .jobify_statsWidget .job-stats li.job-stat,
+        body.jobify-skin-3 ul.job_listings li.job_listing,
+        body.jobify-skin-3 div#job-manager-job-dashboard table.job-manager-jobs tr,
+        body.jobify-skin-3 .woocommerce .woocommerce-order,
+        body.jobify-skin-3 .jobify_widget_blog_posts .content-grid header.entry-header {
+        background-color: ;
+        }
+
+        body {
+        @* padding-top: 110px; *@
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1.5;
+        }
+
+        .footer-cta,
+        .footer-cta a,
+        .footer-cta tel {
+        color: #32313d;
+        }
+
+        .footer-cta a.button:hover {
+        color: #ffffff !important;
+        }
+
+        .footer-cta {
+        background-color: #ffffff;
+        }
+
+        .widget-title--footer,
+        body.jobify-skin-2 footer.site-footer .footer-widgets aside.widget h3.widget-title,
+        body.jobify-skin-2 .widget_block h2 {
+        color: #32313d;
+        }
+
+        .widget--footer a,
+        body.jobify-skin-2 footer.site-footer .footer-widgets aside.widget ul li a {
+        color: #32313d;
+        }
+
+        .widget--footer,
+        body.jobify-skin-2 footer.site-footer .footer-widgets aside.widget .textwidget {
+        color: #32313d;
+        }
+
+        .footer-widgets {
+        background-color: #f5f7fb;
+        }
+
+        .copyright a,
+        body.jobify-skin-2 .copyright a {
+        color: #32313d;
+        }
+
+        .copyright,
+        body.jobify-skin-2 footer.site-footer .copyright .site-info {
+        color: #32313d;
+        }
+
+        .site-footer,
+        body.jobify-skin-2 .site-footer {
+        background-color: #f5f7fb;
+        }
+
+        .button,
+        input[type=button],
+        button,
+        #submitcomment,
+        #commentform input[type=submit],
+        .widget--footer input[type=submit],
+        input[name=wp_job_manager_send_application],
+        input[name=wp_job_manager_edit_application],
+        input[name=submit_bookmark],
+        #rcp_submit,
+        input[name=wp_job_manager_resumes_apply_with_resume],
+        input[name=wp_job_manager_resumes_apply_with_resume_create],
+        .wpcf7-submit,
+        input[type=submit].ninja-forms-field,
+        input[name=submit-job-alert],
+        .hero-search .search_jobs>div input[type=submit],
+        .hero-search .search_resumes>div input[type=submit],
+        body.jobify-skin-3 .load_more_jobs strong {
+        font-family: "Montserrat", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: bold;
+        line-height: 1.3;
+        font-size: 14px;
+        }
+
+        .entry-title {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1.3;
+        }
+
+        .widget-description.widget-description--home,
+        .callout-feature-content p,
+        .hero-search__content p {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1.5;
+        }
+
+        .widget-title.widget-title--home,
+        .callout-feature-title,
+        .hero-search__title {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1.3;
+        }
+
+        .entry-content .rcp_form input[type=email],
+        .entry-content .rcp_form input[type=password],
+        .entry-content .rcp_form input[type=text],
+        .jobify-input,
+        input[type=email],
+        input[type=number],
+        input[type=password],
+        input[type=search],
+        input[type=tel],
+        input[type=text],
+        select,
+        textarea,
+        body .chosen-container-single .chosen-single span,
+        body .chosen-container .chosen-results li.active-result {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        line-height: 1;
+        font-size: 16px;
+        }
+
+        .widget-title {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal; 
+        line-height: 1.3;
+        }
+
+        .logged-in .modal .post-51 .entry-content {
+        padding: 30px;
+        }
+
+        .woocommerce ul.products li.product .onsale,
+        .woocommerce-page ul.products li.product .onsale {
+        background-color: #4845bf;
+        }
+
+        .woocommerce .price ins,
+        .woocommerce ul.product_list_widget ins {
+        background-color: #4440da;
+        }
+
+        .single-product #content .woocommerce-tabs .tabs li.active a,
+        .woocommerce-MyAccount-navigation-link.is-active a {
+        color: #4440da;
+        border-bottom: 2px solid #4440da;
+        }
+
+        @@media screen and (min-width: 1200px) {
+
+        .nav-menu--primary ul li a,
+        .nav-menu--primary li a,
+        .nav-menu--primary ul li a:hover,
+        .nav-menu--primary li a:hover,
+        .primary-menu-toggle,
+        .searchform--header__submit,
+        .searchform--header__input,
+        .jobify-skin-2 header ul#menu-primary .menu-item a,
+        .jobify-skin-2 header ul#menu-primary .menu-item:hover .sub-menu .menu-item a {
+        color: #23232e;
+        }
+
+        body {
+        font-size: 16px;
+        }
+
+        .entry-title {
+        font-size: 38px;
+        }
+
+        .widget-description.widget-description--home {
+        font-size: 16px;
+        }
+
+        .widget-title.widget-title--home {
+        font-size: 36px;
+        }
+
+        .page-header {
+        font-family: "Varela Round", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        font-size: 34px;
+        line-height: 1.3;
+        }
+
+        .widget-title {
+        font-size: 22px;
+        }
+        .site-main{
+        padding-top: 80px !important;
+        }
+        }
+    </style>
+    <link rel='stylesheet' id='newsletter-css' href='~/wp-content/plugins/newsletter/stylef022.css?ver=7.8.5'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-icons-css'
+    href='~/wp-content/plugins/elementor/assets/lib/eicons/css/elementor-icons.min7bb8.css?ver=5.25.0'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-frontend-css'
+    href='~/wp-content/plugins/elementor/assets/css/frontend.minaad7.css?ver=3.18.2' type='text/css' media='all' />
+    <link rel='stylesheet' id='swiper-css'
+    href='~/wp-content/plugins/elementor/assets/lib/swiper/css/swiper.min48f5.css?ver=5.3.6' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='elementor-post-8-css'
+    href='~/wp-content/uploads/sites/5/elementor/css/post-827b0.css?ver=1642485798' type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-pro-css'
+    href='~/wp-content/plugins/elementor-pro/assets/css/frontend.min7e2e.css?ver=3.8.1' type='text/css'
+    media='all' />
+    <link rel='stylesheet' id='elementor-global-css'
+    href='~/wp-content/uploads/sites/5/elementor/css/global27b0.css?ver=1642485798' type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-post-15-css'
+    href='~/wp-content/uploads/sites/5/elementor/css/post-15f650.css?ver=1683669023' type='text/css' media='all' />
+    <link rel='stylesheet' id='jobify-child-css' href='~/wp-content/themes/jobify-skin-2/stylebfbf.css?ver=6.0.9'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='google-fonts-1-css'
+    href='https://fonts.googleapis.com/css?family=Roboto%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CRoboto+Slab%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic%7CMontserrat%3A100%2C100italic%2C200%2C200italic%2C300%2C300italic%2C400%2C400italic%2C500%2C500italic%2C600%2C600italic%2C700%2C700italic%2C800%2C800italic%2C900%2C900italic&amp;display=auto&amp;ver=6.0.9'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-icons-shared-0-css'
+    href='~/wp-content/plugins/elementor/assets/lib/font-awesome/css/fontawesome.min52d5.css?ver=5.15.3'
+    type='text/css' media='all' />
+    <link rel='stylesheet' id='elementor-icons-fa-solid-css'
+    href='~/wp-content/plugins/elementor/assets/lib/font-awesome/css/solid.min52d5.css?ver=5.15.3' type='text/css'
+    media='all' />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+    <script type="04635d92e5bbad88dfcb862b-text/javascript" src='~/wp-includes/js/jquery/jquery.minaf6c.js?ver=3.6.0'
+    id='jquery-core-js'></script>
+    <script type="04635d92e5bbad88dfcb862b-text/javascript"
+    src='~/wp-includes/js/jquery/jquery-migrate.mind617.js?ver=3.3.2' id='jquery-migrate-js'></script>
+    <script type="04635d92e5bbad88dfcb862b-text/javascript"
+    src='http://maps.googleapis.com/maps/api/js?v=3.42.2&amp;libraries=places&amp;language=en&amp;region=US&amp;key=AIzaSyApOXiWaaV5Xv4Wgjns-dDzNV-sMGf58O8&amp;ver=3.exp'
+    id='google-maps-js'></script>
+    <link rel="https://api.w.org/" href="~/wp-json/index.html" />
+    <link rel="alternate" type="application/json" href="~/wp-json/wp/v2/pages/15.json" />
+    <link rel="alternate" type="application/json+oembed"
+    href="~/wp-json/oembed/1.0/embed04c4.json?url=https%3A%2F%2Fjobify-demos.astoundify.com%2Fskin-2%2F" />
+    <link rel="alternate" type="text/xml+oembed"
+    href="~/wp-json/oembed/1.0/embed360e?url=https%3A%2F%2Fjobify-demos.astoundify.com%2Fskin-2%2F&amp;format=xml" />
+    <noscript>
+        <style>
+            .woocommerce-product-gallery {
+            opacity: 1 !important;
+            }
+        </style>
+    </noscript>
+    <meta name="generator"
+    content="Elementor 3.18.2; features: e_dom_optimization, e_optimized_assets_loading, additional_custom_breakpoints, block_editor_assets_optimize, e_image_loading_optimization; settings: css_print_method-external, google_font-enabled, font_display-auto">
+    <style id='job_manager_colors'>
+        .job-type.term-48,
+        .job-type.freelance {
+        background-color: #ff5a5f;
+        }
+
+        .job-type.term-49,
+        .job-type.full-time {
+        background-color: #5bbc2e;
+        }
+
+        .job-type.term-58,
+        .job-type.internship {
+        background-color: #00b2a9;
+        }
+
+        .job-type.term-47,
+        .job-type.part-time {
+        background-color: #735fee;
+        }
+
+        .job-type.term-50,
+        .job-type.temporary {
+        background-color: #727272;
+        }
+    </style>
+    <style type="text/css">
+        .site-branding,
+        .site-description,
+        .site-branding:hover {
+        color: #23232a;
+        text-decoration: none;
+        }
+    </style>
+    <link rel="icon" href="~/wp-content/uploads/sites/5/2022/01/cropped-cropped-Logo-1-32x32.png" sizes="32x32" />
+    <link rel="icon" href="~/wp-content/uploads/sites/5/2022/01/cropped-cropped-Logo-1-192x192.png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="~/wp-content/uploads/sites/5/2022/01/cropped-cropped-Logo-1-180x180.png" />
+    <style type="text/css" id="wp-custom-css">
+        body.home.jobify-skin-2 .hero-section-jobify-section-home-page .hero-search {
+        padding: 20px 0px 100px;
+        }
+
+        body.jobify-skin-2 .newslater-main-section-jobify-skin-2 .newslater-jobify-skin-inner-2 {
+        margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body class="home page-template page-template-elementor_header_footer page page-id-15 
+    theme-jobify woocommerce-no-js single-listing-style-top single-resume-style-top wp-job-manager-categories-enabled wp-job-manager wp-job-manager-resumes 
+    wp-job-manager-wc-paid-listings wp-job-manager-tags wp-job-manager-applications ninjaforms-contact-job-form wp-job-manager-contact-listing 
+    woocommerce testimonials ninja-forms geo-my-wp custom-font nav-menu-break-large fixed-header jobify-skin-2 elementor-default 
+    elementor-template-full-width elementor-kit-8 elementor-page elementor-page-15" style="overflow-y: auto;">
+    <div id="page" class="hfeed site">
+        <header id="masthead" class="site-header" role="banner">
+            <div class="container">
+                <div class="site-header__wrap">
+                    <a asp-controller="Home" asp-action="Index" title="" rel="home" class="site-branding">
+                        <h1 class="site-title">
+                            <img src="~/wp-content/uploads/sites/5/2022/01/Logo.png" width="131" height="39"
+                            alt="header_image" />
+                            <span></span>
+                        </h1>
+                    </a>
+                    <nav id="site-navigation" class="site-primary-navigation">
+                        <div class="nav-menu nav-menu--primary">
+                            <ul id="menu-primary" class="nav-menu nav-menu--primary">
+                                <li id="menu-item-149"
+                                class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-149">
+                                    <a href="#">Hồ sơ & CV</a>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-183"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-183">
+                                            <a href="find-job/index.html">Tạo CV</a>
+                                        </li>
+                                        <li id="menu-item-184"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-184">
+                                            <a href="post-job/index.html">Tải CV lên</a>
+                                        </li>
+                                        <li id="menu-item-155"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-155">
+                                            <a href="jobify-companies/index.html">Quản lý CV</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li id="menu-item-10"
+                                class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-10">
+                                    <a href="#">Việc làm</a>
+                                    <ul class="sub-menu">
+                                        <li id="menu-item-66"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-66">
+                                            <a asp-controller="JobClient" asp-action="SearchJob">Tìm kiếm việc làm</a>
+                                        </li>
+                                        <li id="menu-item-72"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-72">
+                                            <a asp-controller="JobClient" asp-action="MyApplyJob" >Việc làm đã ứng tuyển</a>
+                                        </li>
+                                        <li id="menu-item-17"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-17">
+                                            <a asp-controller="JobClient" asp-action="MySaveJob">Việc làm đã lưu</a>
+                                        </li>
+                                        <li id="menu-item-70"
+                                        class="menu-item menu-item-type-post_type menu-item-object-page menu-item-70">
+                                            <a asp-controller="Company" asp-action="ListCompany">Danh sách công ty</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @* <li id="menu-item-33"
+                                class="menu-item menu-item-type-post_type menu-item-object-page menu-item-33"><a
+                                    href="blog/index.html">Bài viết</a>
+                                </li> *@
+                                @if(!User.Identity.IsAuthenticated){
+                                    <li
+                                    class="register menu-item menu-item-type-post_type menu-item-object-page">
+                                        <a asp-action="SignUp" asp-controller="Account" class="popup-trigger-ajax">Đăng
+                                            ký</a>
+                                    </li>
+                                    <li id="menu-item-53"
+                                    class="login menu-item menu-item-type-post_type menu-item-object-page menu-item-53">
+                                        <a asp-action="Login" asp-controller="Account">Đăng nhập</a>
+                                    </li>
+                                }else{
+                                    if(User.FindFirstValue(System.Security.Claims.ClaimTypes.Role) == "2"){
+                                        <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
+                                            <a href="#">Quản lý công ty</a>
+                                            <ul class="sub-menu">
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                                    <a asp-action="ListUserApply" asp-controller="Company"> Danh sách ứng tuyển</a>
+                                                </li>
+                                                <li class="menu-item menu-item-type-post_type menu-item-object-page">
+                                                    <a asp-action="JobInCompany" asp-controller="JobClient"> Danh sách công việc</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        
+                                    }                       
+                                    <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children">
+                                        <a href="#">
+                                            Chào, @User.Identity.Name!
+                                        </a>
+                                        <ul class="sub-menu">
+                                            <li class="logout menu-item menu-item-type-post_type menu-item-object-page">
+                                                <a asp-action="DetailAccount" asp-controller="Account" class="popup-trigger-ajax">Thông tin tài khoản</a>
+                                            </li>
+                                            <li class="logout menu-item menu-item-type-post_type menu-item-object-page">
+                                                <a asp-action="Logout" asp-controller="Account" class="popup-trigger-ajax">Đăng
+                                                    xuất</a>
+                                            </li>
+                                        </ul>
+                                    </li> 
+                                }
+                                
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
+                <a href="#site-navigation"
+                    class="js-primary-menu-toggle primary-menu-toggle primary-menu-toggle--open"><span
+                        class="screen-reader-text">Menu</span></a>
+            </div>
+        </header><!-- #masthead -->
+
+        <div id="main" class="site-main" style="padding-top: 0px;">
+            @RenderBody()
+        </div><!-- #main -->
+        <footer id="colophon" class="site-footer skin-2-footer" role="contentinfo">
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <aside id="text-1" class="widget widget--footer widget_text">
+                        <h3 class="widget-title widget-title--footer">Jobify</h3>
+                        <div class="textwidget">Tìm kiếm việc làm giờ đây thật dễ dàng. Sử dụng Jobify để quản lý trang tuyển dụng và kiếm thêm thu nhập!</div>
+                    </aside>
+                </div>
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <aside id="pages-1" class="widget widget--footer widget_pages">
+                        <h3 class="widget-title widget-title--footer">Sơ đồ trang</h3>
+                        <ul>
+                            <li class="page_item page-item-51 page_item_has_children"><a href="">Tài khoản</a>
+                                <ul class='children'>
+                                    <li class="page_item page-item-67"><a href="">Quản lý công việc</a></li>
+                                </ul>
+                            </li>
+                            <li class="page_item page-item-32"><a href="">Blog</a></li>
+                            <li class="page_item page-item-6"><a href="">Thanh toán</a></li>
+                            <li class="page_item page-item-16"><a href="">Công ty</a></li>
+                            <li class="page_item page-item-65"><a href="">Tìm việc</a></li>
+                            <li class="page_item page-item-57"><a href="">Đăng ký</a></li>
+                            <li class="page_item page-item-74"><a href="">Khách hàng nhận xét</a></li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <aside id="recent-posts-1" class="widget widget--footer widget_recent_entries">
+                        <h3 class="widget-title widget-title--footer">Bài viết tin tức gần đây</h3>
+                        <ul>
+                            <li>
+                                <a href="">Thuê ngoài và Tiếp thị kỹ thuật số nội bộ: Chọn lựa gì tốt nhất cho doanh nghiệp nhỏ</a>
+                            </li>
+                            <li>
+                                <a href="">Nhà cung cấp tài khoản thương mại tốt nhất (và tệ nhất) tại Việt Nam</a>
+                            </li>
+                            <li>
+                                <a href="">Bạn có công việc nào mà người bình thường thậm chí không biết đến không?</a>
+                            </li>
+                            <li>
+                                <a href="">DigitalOcean ra mắt trung tâm dữ liệu đầu tiên tại Hà Nội, Việt Nam</a>
+                            </li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <aside id="text-2" class="widget widget--footer widget_text">
+                        <h3 class="widget-title widget-title--footer">Văn phòng Jobify</h3>
+                        <div class="textwidget">
+                            <p>Jobify Inc. 96 Định Công,<br />
+                                Hoàng Mai,<br />
+                                Hà Nội 10000</p>
+                        </div>
+                    </aside>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="copyright">
+        <div class="container">
+            <div class="site-info">
+                &copy; 2024 &mdash; Tất cả quyền được bảo lưu </div><!-- .site-info -->
+
+
+            <a href="#page" class="btt btt--no-social"><span class="screen-reader-text">Lên đầu trang</span></a>
+        </div>
+    </div>
+</footer><!-- #colophon -->
+    </div><!-- #page -->
+    <div id="ajax-response"></div>
+</body>
+
+
+</html>

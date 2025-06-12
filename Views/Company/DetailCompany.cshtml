@@ -1,0 +1,97 @@
+@{
+    ViewData["Title"] = "Detail company";
+}
+@functions {
+    public string GetRelativeTime(DateTime postedDate)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan timeDiff = now - postedDate;
+
+        if (timeDiff.TotalHours < 24 && now.Date == postedDate.Date)
+        {
+            int hours = (int)timeDiff.TotalHours;
+            return $"{hours} giờ trước";
+        }
+        else
+        {
+            return postedDate.ToString("dd/MM/yyyy");
+        }
+    }
+    public static string FormatToVND(double amount)
+    {
+        var culture = new System.Globalization.CultureInfo("vi-VN");
+        return string.Format(culture, "{0:C0}", amount);
+    }
+}
+<header class="page-header">
+    <h1 class="page-title">@ViewBag.company.sNameCompany</h1>
+    <h3 class="page-subtitle"><strong>@ViewBag.countJob công việc khả dụng</strong> </h3>
+</header>
+<div id="primary" class="content-area">
+    <div id="content" class="container" role="main">
+        <div class="company-profile row">
+            <div class="col-md-9 col-sm-8 col-xs-12">
+                <h3>Giới thiệu công ty</h3>
+                <p>@ViewBag.company.sDescriptionCompany</p>
+                <h3>Thông tin liên hệ</h3>
+                <ul class="job_listing-company-social company-social">
+                    <li><a href="https://www.facebook.com/codepen" target="_blank" class="job_listing-facebook">
+                            Facebook </a></li>
+                    <li><i class="fas fa-phone-alt"></i> @ViewBag.company.iPhoneNumber</li>
+                    <li><i class="fas fa-map-marker-alt"></i> @ViewBag.company.sAddressCompany</li>
+                </ul>
+                <ul class="job_listing-company-social company-social mt-3">
+                    <i class="fas fa-building"></i> @ViewBag.company.iNumberEmployees nhân viên
+                </ul>
+            </div>
+            <div class="col-md-1 col-sm-8 col-xs-12"></div>
+            <div class="company-profile-info job-meta col-md-2 col-sm-4 col-xs-4">
+                <div style="border: 1px solid #e5e5e5; padding: 10px;border-radius: 10px;">
+                    <img class="company_logo" src="@ViewBag.company.sPhotoCompany"
+                        alt="Front End Developer &#8211; Digital Arts" />
+                </div>
+            </div>
+        </div>
+        <hr class="mt-5">
+        <div class="company-profile row">
+            <div class="company-profile-jobs col-md-12 col-sm-8 col-xs-12">
+                <div class="job_listings">
+                    <ul class="job_listings">
+                        @foreach (var job in ViewBag.jobs)
+                        {
+                            <li
+                                class="job_listing job-type-freelance job_position_featured type-job_listing status-publish has-post-thumbnail hentry job_listing_region-new-york job_listing_type-freelance">
+                                <a asp-controller="JobClient" asp-action="DetailJob" asp-route-id="@job.iJobID"
+                                    class="job_listing-clickbox"></a>
+                                <div class="job_listing-logo">
+                                    <img class="company_logo" src=" @ViewBag.company.sPhotoCompany"
+                                        alt="@job.sNameJob &#8211; @job.TblCategory.sCategoryName" />
+                                </div>
+                                <div class="job_listing-about">
+                                    <div class="job_listing-position job_listing__column">
+                                        <h3 class="job_listing-title">@job.sNameJob</h3>
+
+                                        <div class="job_listing-company">
+                                            <strong>@job.TblCategory.sCategoryName</strong>
+                                        </div>
+                                    </div>
+                                    <div class="job_listing-location job_listing__column">
+                                        <a class="google_map_link" target="_blank">@ViewBag.company.sAddressCompany</a>
+                                    </div>
+                                    <div class="mb-2" style="color: green; font-size: 15px; font-weight: 600;">
+                                        Lương: ~ @FormatToVND(job.fSalaryJob)
+                                    </div>
+                                    <ul class="job_listing-meta job_listing__column">
+                                        <li class="job_listing-type job-type">@job.sTypeJob
+                                        </li>
+                                        <li class="job_listing-date">Đăng @GetRelativeTime(job.dPostedDate)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div><!-- #content -->
+</div><!-- #primary -->

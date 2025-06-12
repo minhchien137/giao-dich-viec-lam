@@ -1,0 +1,167 @@
+@{
+    ViewData["Title"] = "Danh sách ứng viên";
+    var listUserApply = ViewBag.listUserApply as IEnumerable<dynamic>; // Định dạng danh sách ứng tuyển
+}
+<script>
+    function openModal(data) {
+    // Hiển thị modal
+    document.getElementById('userDetailModal').style.display = 'block';
+    document.getElementById("modalBackdrop").style.display = "block";
+    // Gán dữ liệu vào modal
+    console.log("Data......",data)
+    document.getElementById('candidate_email').value = data.email;
+    document.getElementById('candidate_name').value = data.fullName;
+    document.getElementById('candidate_phone').value = data.phone;
+    document.getElementById('candidate_address').value = data.address;
+    document.getElementById('application_experience').value = data.experience;
+    document.body.style.overflow = 'hidden'; // Tắt scroll
+
+   
+    }
+
+    function closeModal() {
+        // Ẩn modal
+        document.getElementById('userDetailModal').style.display = 'none';
+        document.getElementById("modalBackdrop").style.display = "none";
+        document.body.style.overflow = ''; // Tắt scroll
+    }
+    async function getUserDetails(userId) {
+        try {
+            const response = await fetch(`/api/user/getUserDetails/${userId}`);
+            if (!response.ok) {
+                throw new Error('Không tìm thấy thông tin người dùng.');
+            }
+            const data = await response.json();
+            openModal(data); // Hiển thị modal sau khi có dữ liệu
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+</script>
+<header class="page-header">
+    <h2 class="page-title">
+        <section
+            class="elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+            data-element_type="section">
+            <div class="elementor-container elementor-column-gap-default">
+                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                    data-element_type="column">
+                    <div class="elementor-widget-wrap elementor-element-populated">
+                        <div class="elementor-element find-a-job-heading-jobiify-skin-2 elementor-widget elementor-widget-heading "
+                            data-element_type="widget" data-widget_type="heading.default">
+                            <div
+                                class="elementor-widget-container d-flex align-items-center justify-content-center w-100">
+                                <h1 class="elementor-heading-title elementor-size-default">Danh sách <span
+                                        class="blue-highlight">ứng viên</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </h2>
+</header>
+@if (listUserApply != null && listUserApply.Any())
+    {
+        <div class="p-5">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Họ và tên</th>
+                        @* <th>Email</th> *@
+                        <th>Số điện thoại</th>
+                        <th>Vị trí ứng tuyển</th>
+                        <th>Thư giới thiệu</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var application in listUserApply)
+                    {
+                        <tr>
+                            <td>@(listUserApply.ToList().IndexOf(application) + 1)</td>
+                            <td>@application.TblProfileUser.sFullName</td>
+                            @* <td>@application.TblProfileUser.sEmail</td>*@
+                            <td>@application.TblProfileUser.sPhoneNumber</td>
+                            <td>@application.TblJob.sNameJob</td>
+                            @* <td>@application.dAppliedDate.ToString("dd/MM/yyyy")</td>*@
+                            <td>@application.sMessage</td>
+                            <td><input onclick="getUserDetails(@application.iProfileID)" type="button"
+                                    class="application_button button" value="Xem chi tiết" /></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div id="primary" class="content-area container" role="main">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1">
+                    <article id="post-67" class="post-67 page type-page status-publish hentry">
+                        <div class="entry-content">
+                            <div id="job-manager-job-dashboard">
+                                <p class="account-sign-in">Hiện chưa có người dùng nào ứng tuyển.
+                                    @* <a asp-controller="JobClient" asp-action="SearchJob" class="button">Tìm kiếm việc làm</a> *@
+                                </p>
+                            </div>
+                        </div>
+                    </article><!-- #post -->
+                </div>
+            </div>
+        </div>
+    }
+<div id="modalBackdrop" class="modal-backdrop-custom" style="display: none;" onclick="closeModal()"></div>
+<div id="userDetailModal" class="application_details modal" style="position: fixed; top: 20px; left: 0px;
+right: 0px; background-color: white; height: auto; z-index: 1000;">
+    <button type="button" class="close" style="position: absolute; top: 20px; right: 20px;" data-dismiss="modal"
+        aria-label="Close" onclick="closeModal()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <form class="job-manager-application-form job-manager-form" enctype="multipart/form-data">
+        <h2 class="modal-title">Thông tin ứng viên </h2>
+        <fieldset class="fieldset-candidate_name">
+            <label for="candidate_name">Họ và tên </label>
+            <div class="field required-field">
+                <input type="text" class="input-text" name="candidate_name" id="candidate_name" placeholder="" value=""
+                    maxlength="" readonly/>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-candidate_name">
+            <label for="candidate_address">Địa chỉ </label>
+            <div class="field required-field">
+                <textarea cols="20" rows="3" type="text" class="input-text" name="candidate_address" id="candidate_address" placeholder="" value=""
+                    maxlength="" readonly></textarea>
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-candidate_email">
+            <label for="candidate_phone">Số điện thoại</label>
+            <div class="field required-field">
+                <input type="text" class="input-text" name="candidate_email" id="candidate_phone" placeholder=""
+                    value="" maxlength="" readonly />
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-candidate_email">
+            <label for="candidate_email">Địa chỉ email</label>
+            <div class="field required-field">
+                <input type="text" class="input-text" name="candidate_email" id="candidate_email" placeholder=""
+                    value="" maxlength="" readonly />
+            </div>
+        </fieldset>
+        <fieldset class="fieldset-application_message">
+            <label for="application_experience">Kinh nghiệm</label>
+            <div class="field required-field">
+                <textarea cols="20" rows="3" class="input-text" name="application_experience" id="application_experience" maxlength="" readonly></textarea>
+            </div>
+        </fieldset>
+        <p>
+            <input type="submit" class="button wp_job_manager_send_application_button" value="Chấp nhận"
+                 />
+            <input id="btn_close" type="button" class="application_button button" value="Hủy" onclick="closeModal()" />
+            <input type="hidden" name="wp_job_manager_send_application" value="1" />
+        </p>
+    </form>
+</div>

@@ -1,0 +1,451 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div data-elementor-type="wp-page" data-elementor-id="15" class="elementor elementor-15">
+    @* Trang search *@
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-328b1867 elementor-section-full_width elementor-section-height-default elementor-section-height-default"
+        data-id="328b1867" data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-63a55b4f"
+                data-id="63a55b4f" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-7a3f0e01 elementor-widget elementor-widget-text-editor"
+                        data-id="7a3f0e01" data-element_type="widget" data-widget_type="text-editor.default">
+                        <div class="elementor-widget-container">
+                            Tìm kiếm <span class="blue-highlight">Công việc phù hợp</span></br>Dành cho bạn</div>
+                    </div>
+                    <div class="elementor-element elementor-element-1ed7bb96 elementor-widget elementor-widget-text-editor"
+                        data-id="1ed7bb96" data-element_type="widget" data-widget_type="text-editor.default">
+                        <div class="elementor-widget-container">
+                            1,570 việc làm! Công việc mơ ước đang đợi bạn. </div>
+                    </div>
+                    <section
+                        class="elementor-section elementor-top-section elementor-element job-listing-jobify-skin-2 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+                        data-element_type="section">
+                        <div class="elementor-container elementor-column-gap-default">
+                            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                                data-element_type="column">
+                                <div class="elementor-widget-wrap elementor-element-populated">
+                                    <div class="elementor-element elementor-widget elementor-widget-elementify-jobs"
+                                        data-element_type="widget" data-widget_type="elementify-jobs.default">
+                                        <div class="elementor-widget-container">
+                                            <div id="primary" role="main">
+                                                <div class="container content-area">
+                                                    <div class="job_listings" data-location="" data-keywords=""
+                                                        data-show_filters="true" data-show_pagination="false"
+                                                        data-per_page="10" data-orderby="featured" data-order="DESC"
+                                                        data-categories="" data-disable-form-state-storage=""
+                                                        data-post_id="166">
+                                                        <form class="job_filters">
+                                                            <div class="search_jobs">
+                                                                <div class="search_keywords">
+                                                                    <label for="search_keywords">Từ khóa</label>
+                                                                    <input type="text" name="search_keywords"
+                                                                        id="search_keywords" placeholder="Từ khóa"
+                                                                        value="" />
+                                                                </div>
+                                                                <div class="search_location">
+                                                                    <label for="search_location">Địa điểm</label>
+                                                                    <input type="text" name="search_location"
+                                                                        id="search_location" placeholder="Địa điểm"
+                                                                        value="" />
+                                                                </div>
+                                                                <div class="search_categories">
+                                                                    <label for="search_categories">Ngành nghề</label>
+                                                                    <select id='search_categories' class='form-select'>
+                                                                        <option value="">Chọn ngành nghề</option>
+                                                                        @foreach (var cate in ViewBag.Categories)
+                                                                        {
+                                                                            <option class="level-0"
+                                                                                value="@cate.iCategoryID">
+                                                                                @cate.sCategoryName</option>
+                                                                        }
+                                                                    </select>
+                                                                </div>
+                                                                <div class="search_submit">
+                                                                    <input type="submit" name="submit" value="Search">
+                                                                </div>
+                                                            </div>
+                                                            <ul class="job_types">
+                                                                <li><label for="job_type_freelance"
+                                                                        class="freelance"><input type="checkbox"
+                                                                            name="filter_job_type[]" value="freelance"
+                                                                            checked='checked' id="job_type_freelance" />
+                                                                        freelance</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="filter_job_type[]"
+                                                                        value="full-time" checked='checked'
+                                                                        id="job_type_full-time" />
+                                                                    <label for="job_type_full-time"
+                                                                        class="full-time">Toàn thời
+                                                                        gian</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="filter_job_type[]"
+                                                                        value="internship" checked='checked'
+                                                                        id="job_type_internship" />
+                                                                    <label for="job_type_internship" class="internship">
+                                                                        Thực tập</label>
+                                                                </li>
+                                                                <li>
+                                                                    <input type="checkbox" name="filter_job_type[]"
+                                                                        value="part-time" checked='checked'
+                                                                        id="job_type_part-time" />
+                                                                    <label for="job_type_part-time" class="part-time">
+                                                                        Bán thời gian</label>
+                                                                </li>
+                                                            </ul>
+                                                            <input type="hidden" name="filter_job_type[]" value="" />
+                                                        </form>
+                                                    </div>
+                                                </div>
+
+                                            </div><!-- #primary -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+    @* Trang công việc danh sách *@
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-5ca7e434 featured-job-jobify-2-main elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+        data-id="5ca7e434" data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-3360a8dc"
+                data-id="3360a8dc" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-66f14932 sponsorship-jobify-skin-2 elementor-widget elementor-widget-text-editor"
+                        data-id="66f14932" data-element_type="widget" data-widget_type="text-editor.default">
+                        <div class="elementor-widget-container">
+                            <h3>Công việc<span class="blue-highlight"> nổi bật</span></h3>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-53191539 featured-job-jobify-skin-2  elementor-widget elementor-widget-wp-widget-widget_featured_jobs"
+                        data-id="53191539" data-element_type="widget"
+                        data-widget_type="wp-widget-widget_featured_jobs.default">
+                        <div class="elementor-widget-container">
+
+                            <div class="job_manager widget_featured_jobs">
+                                <ul class="job_listings">
+                                    <li id="job_listing-208"
+                                        class="job_listing job-type-freelance job_position_featured post-208 type-job_listing status-publish has-post-thumbnail hentry job_listing_region-new-york job_listing_type-freelance"
+                                        data-title="Web Designer at Squarespace">
+                                        <a asp-action="DetailJob" asp-controller="JobClient"
+                                            class="job_listing-clickbox"></a>
+                                        <div class="job_listing-logo">
+                                            <img class="company_logo"
+                                                src="~/wp-content/uploads/sites/5/2021/09/listing-squarespace-logo-150x150-1-150x150.jpg"
+                                                alt="Web Designer" />
+                                        </div>
+                                        <div class="job_listing-about">
+                                            <div class="job_listing-position job_listing__column">
+                                                <h3 class="job_listing-title">Thiết kế Web</h3>
+
+                                                <div class="job_listing-company">
+                                                    <strong>Thiết kế Web</strong>
+                                                </div>
+                                            </div>
+                                            <div class="job_listing-location job_listing__column">
+                                                <a class="google_map_link" target="_blank">Thanh Xuân, Hà Nội</a>
+                                            </div>
+                                            <ul class="job_listing-meta job_listing__column">
+                                                <li class="job_listing-type job-type freelance">freelance
+                                                </li>
+                                                <li class="job_listing-date">Đăng 3 tiếng trước</li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                    <li id="job_listing-207"
+                                        class="job_listing job-type-part-time job_position_featured post-207 type-job_listing status-publish has-post-thumbnail hentry job_listing_region-toronto job_listing_type-part-time"
+                                        data-title="Art Director at Shopify">
+                                        <a asp-action="DetailJob" asp-controller="JobClient"
+                                            class="job_listing-clickbox"></a>
+                                        <div class="job_listing-logo">
+                                            <img class="company_logo"
+                                                src="~/wp-content/uploads/sites/5/2021/09/listing-shopify-logo-300x300-1-150x150.jpg"
+                                                alt="Art Director" />
+                                        </div>
+                                        <div class="job_listing-about">
+
+                                            <div class="job_listing-position job_listing__column">
+                                                <h3 class="job_listing-title">Art Director</h3>
+
+                                                <div class="job_listing-company">
+                                                    <strong>Art Director</strong>
+                                                </div>
+                                            </div>
+
+                                            <div class="job_listing-location job_listing__column">
+                                                <a class="google_map_link" target="_blank">Cầu giấy, Hà Nội</a>
+                                            </div>
+
+                                            <ul class="job_listing-meta job_listing__column">
+
+                                                <li class="job_listing-type job-type part-time">part-time
+                                                </li>
+
+                                                <li class="job_listing-date">Đăng 3 tiếng trước</li>
+
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-ddb1c10 elementor-align-center elementor-widget elementor-widget-button"
+                        data-id="ddb1c10" data-element_type="widget" data-widget_type="button.default">
+                        <div class="elementor-widget-container">
+                            <div class="elementor-button-wrapper">
+                                <a class="elementor-button elementor-button-link elementor-size-sm"
+                                    href="find-a-job/index.html">
+                                    <span class="elementor-button-content-wrapper">
+                                        <span class="elementor-button-text">Tìm kiếm thêm công việc</span>
+                                    </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section
+        class="elementor-section elementor-top-section elementor-element elementor-element-99dc3ae testimonial-jobify-2-main-sec elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+        data-id="99dc3ae" data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element elementor-element-587167c8"
+                data-id="587167c8" data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-element-3b578f7a sponsorship-jobify-skin-2 elementor-widget elementor-widget-text-editor"
+                        data-id="3b578f7a" data-element_type="widget" data-widget_type="text-editor.default">
+                        <div class="elementor-widget-container">
+                            <h3><span class="blue-highlight">Đánh giá</span> của mọi người<br><span
+                                    class="new-line-txt">về trang web Jobify</span></h3>
+                        </div>
+                    </div>
+                    <div class="elementor-element elementor-element-2f1c4fbb testimonial-jobify-skin-2 elementor-widget elementor-widget-wp-widget-jobify_widget_testimonials"
+                        data-id="2f1c4fbb" data-element_type="widget"
+                        data-widget_type="wp-widget-jobify_widget_testimonials.default">
+                        <div class="elementor-widget-container">
+                            <div
+                                class="jobify_widget_testimonials widget--home-testimonials widget--home-testimonials--white">
+                                <div class="container">
+                                    <div class="testimonial-slider-wrap">
+                                        <div class="testimonial-slider">
+                                            <div class="testimonials component effect-fade">
+                                                <div class="testimonials-container">
+                                                    <button id="prev-btn" class="testimonial-btn">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                    </button>
+                                                    <div class="testimonials-list">
+                                                        <blockquote id="quote-26"
+                                                            class="woothemes-testimonial woothemes-testimonial--individual active">
+                                                            <p>Nếu không có Jobify, tôi sẽ trở thành người vô gia cư, họ
+                                                                đã tìm cho tôi một công việc và giúp tôi nhanh chóng sắp
+                                                                xếp mọi thứ! Tôi hoàn toàn tin vào mức độ dịch vụ
+                                                                mà họ cung cấp!</p>
+                                                            <cite class="woothemes-testimonial--individual__author"><img
+                                                                    width="70" height="70"
+                                                                    src="wp-content/uploads/sites/5/2022/01/testimonial-5-100x100.jpg"
+                                                                    class="avatar wp-post-image" alt=""
+                                                                    srcset="https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-5-100x100.jpg 100w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-5-300x300.jpg 300w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-5-150x150.jpg 150w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-5.jpg 350w"
+                                                                    sizes="(max-width: 70px) 100vw, 70px" />
+                                                                <cite class="author" itemprop="author" itemscope
+                                                                    itemtype="http://schema.org/Person"><span
+                                                                        itemprop="name">Customer
+                                                                        #5</span></cite><!--/.author-->
+                                                            </cite>
+                                                        </blockquote>
+                                                        <blockquote id="quote-28"
+                                                            class="woothemes-testimonial woothemes-testimonial--individual">
+                                                            <p>Bất ngờ, hoàn toàn bất ngờ! Jobify là một dịch vụ tuyệt
+                                                                vời cung cấp trợ
+                                                                giúp cá nhân một đối một để tìm việc làm và họ biết cách
+                                                                làm hài lòng, tôi sẽ sử dụng chúng một lần nữa!</p>
+                                                            <cite class="woothemes-testimonial--individual__author"><img
+                                                                    loading="lazy" width="70" height="70"
+                                                                    src="wp-content/uploads/sites/5/2022/01/testimonial-4-100x100.jpg"
+                                                                    class="avatar wp-post-image" alt="" loading="lazy"
+                                                                    srcset="https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-4-100x100.jpg 100w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-4-300x300.jpg 300w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-4-150x150.jpg 150w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-4.jpg 350w"
+                                                                    sizes="(max-width: 70px) 100vw, 70px" />
+                                                                <cite class="author" itemprop="author" itemscope
+                                                                    itemtype="http://schema.org/Person"><span
+                                                                        itemprop="name">Customer
+                                                                        #4</span></cite><!--/.author-->
+                                                            </cite>
+                                                        </blockquote>
+                                                        <blockquote id="quote-30"
+                                                            class="woothemes-testimonial woothemes-testimonial--individual">
+                                                            <p>Nếu tôi không tìm thấy Jobify, tôi khá chắc chắn rằng tôi
+                                                                sẽ không ở đây đâu, trang web đã giúp tôi tìm được việc
+                                                                làm trong vòng chưa đầy 2 ngày và công việc thật tuyệt
+                                                                vời, dịch vụ tuyệt vời!</p>
+                                                            <cite class="woothemes-testimonial--individual__author"><img
+                                                                    loading="lazy" width="70" height="70"
+                                                                    src="wp-content/uploads/sites/5/2022/01/testimonial-3-100x100.jpg"
+                                                                    class="avatar wp-post-image" alt="" loading="lazy"
+                                                                    srcset="https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-3-100x100.jpg 100w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-3-300x300.jpg 300w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-3-150x150.jpg 150w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-3.jpg 350w"
+                                                                    sizes="(max-width: 70px) 100vw, 70px" />
+                                                                <cite class="author" itemprop="author" itemscope
+                                                                    itemtype="http://schema.org/Person"><span
+                                                                        itemprop="name">Customer
+                                                                        #3</span></cite><!--/.author-->
+                                                            </cite>
+                                                        </blockquote>
+                                                        <blockquote id="quote-34"
+                                                            class="woothemes-testimonial woothemes-testimonial--individual">
+                                                            <p>Dịch vụ tuyệt vời, ngay khi gặp khó khăn trong tìm kiếm
+                                                                công việc, Jobify đã giúp tôi tìm kiếm một cách nhanh
+                                                                chóng.</p>
+                                                            <cite class="woothemes-testimonial--individual__author"><img
+                                                                    loading="lazy" width="70" height="70"
+                                                                    src="wp-content/uploads/sites/5/2022/01/testimonial-1-100x100.jpg"
+                                                                    class="avatar wp-post-image" alt="" loading="lazy"
+                                                                    srcset="https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-1-100x100.jpg 100w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-1-300x300.jpg 300w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-1-150x150.jpg 150w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-1.jpg 350w"
+                                                                    sizes="(max-width: 70px) 100vw, 70px" />
+                                                                <cite class="author" itemprop="author" itemscope
+                                                                    itemtype="http://schema.org/Person"><span
+                                                                        itemprop="name">Customer
+                                                                        #1</span></cite><!--/.author-->
+                                                            </cite>
+                                                        </blockquote>
+                                                        <blockquote id="quote-40"
+                                                            class="woothemes-testimonial woothemes-testimonial--individual">
+                                                            <p>Jobify cung cấp một dịch vụ tuyệt vời và tôi không thể
+                                                                hạnh phúc hơn! Họ tận tâm giúp các nhà tuyển dụng tìm
+                                                                kiếm những ứng viên tuyệt vời, dịch vụ tuyệt vời!</p>
+                                                            <cite class="woothemes-testimonial--individual__author"><img
+                                                                    loading="lazy" width="70" height="70"
+                                                                    src="wp-content/uploads/sites/5/2022/01/testimonial-2-100x100.jpg"
+                                                                    class="avatar wp-post-image" alt="" loading="lazy"
+                                                                    srcset="https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-2-100x100.jpg 100w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-2-300x300.jpg 300w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-2-150x150.jpg 150w, https://jobify-demos.astoundify.com/skin-2/wp-content/uploads/sites/5/2022/01/testimonial-2.jpg 350w"
+                                                                    sizes="(max-width: 70px) 100vw, 70px" />
+                                                                <cite class="author" itemprop="author" itemscope
+                                                                    itemtype="http://schema.org/Person"><span
+                                                                        itemprop="name">Customer
+                                                                        #2</span></cite><!--/.author-->
+                                                            </cite>
+                                                        </blockquote>
+                                                    </div>
+                                                    <button id="next-btn" class="testimonial-btn">
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="fix"></div>
+                                            </div><!--/.testimonials-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <style>
+                                    #jobify_widget_testimonials-REPLACE_TO_ID {
+                                        background-color: #ffffff;
+                                    }
+
+
+                                    #jobify_widget_testimonials-REPLACE_TO_ID .widget-title,
+                                    #jobify_widget_testimonials-REPLACE_TO_ID .widget-description,
+                                    #jobify_widget_testimonials-REPLACE_TO_ID .testimonial-slider .slick-prev:before,
+                                    #jobify_widget_testimonials-REPLACE_TO_ID .testimonial-slider .slick-next:after {
+                                        color: #23232a
+                                    }
+                                </style>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<style>
+    .testimonials-container {
+        position: relative;
+        width: 100%;
+    }
+
+    .testimonial-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    #prev-btn {
+        left: -50px;
+        z-index: 5;
+    }
+
+    #next-btn {
+        right: -50px;
+    }
+
+    .testimonials-list {
+        overflow: hidden;
+        width: 100%;
+        position: relative;
+    }
+
+    .woothemes-testimonial {
+        width: 100%;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 0.5s ease-in-out;
+    }
+
+    .woothemes-testimonial.active {
+        display: block !important;
+        position: relative;
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const testimonials = document.querySelectorAll(".woothemes-testimonial");
+        const prevBtn = document.getElementById("prev-btn");
+        const nextBtn = document.getElementById("next-btn");
+        let currentIndex = 0;
+
+        function showSlide(index) {
+            testimonials.forEach((testimonial, i) => {
+                testimonial.classList.toggle("active", i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % testimonials.length;
+            showSlide(currentIndex);
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+            showSlide(currentIndex);
+        }
+
+        // Sự kiện cho các nút
+        nextBtn.addEventListener("click", nextSlide);
+        prevBtn.addEventListener("click", prevSlide);
+
+        // Hiển thị slide đầu tiên
+        showSlide(currentIndex);
+
+        // Chuyển tự động sau mỗi 3 giây (có thể tùy chỉnh)
+        //setInterval(nextSlide, 3000);
+    });
+
+</script>

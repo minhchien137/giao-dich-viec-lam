@@ -1,0 +1,114 @@
+@using System.Globalization
+@{
+    ViewData["Title"] = "Your Apply Job";
+}
+@functions {
+    public string GetRelativeTime(DateTime postedDate)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan timeDiff = now - postedDate;
+
+        if (timeDiff.TotalHours < 24 && now.Date == postedDate.Date)
+        {
+            int hours = (int)timeDiff.TotalHours;
+            return $"{hours} giờ trước";
+        }
+        else
+        {
+            return postedDate.ToString("dd/MM/yyyy");
+        }
+    }
+    public static string FormatToVND(double amount)
+    {
+        var culture = new CultureInfo("vi-VN");
+        return string.Format(culture, "{0:C0}", amount);
+    }
+}
+<header class="page-header">
+    <h2 class="page-title">Việc làm đã ứng tuyển</h2>
+</header>
+@if (!User.Identity.IsAuthenticated)
+{
+    <div id="primary" class="content-area container" role="main">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-md-offset-1">
+                <article id="post-67" class="post-67 page type-page status-publish hentry">
+                    <div class="entry-content">
+                        <div id="job-manager-job-dashboard">
+                            <p class="account-sign-in">Bạn cần Đăng nhập để xem việc làm đã ứng tuyến
+                                <a asp-controller="Account" asp-action="Login" class="button">Đăng nhập</a>
+                            </p>
+                        </div>
+                    </div>
+                </article><!-- #post -->
+            </div>
+        </div>
+    </div>
+    <!-- #primary -->
+}
+else
+{
+    if (ViewBag.jobUserApply != null)
+    {
+        <div class="elementor-element  featured-job-jobify-skin-2  elementor-widget elementor-widget-wp-widget-widget_featured_jobs"
+            data-element_type="widget" data-widget_type="wp-widget-widget_featured_jobs.default">
+            <div class="elementor-widget-container">
+                <div class="job_manager widget_featured_jobs">
+                    <ul class="job_listings">
+                        @* Dùng foreach tại đây để list ra danh sách *@
+                        @foreach (var job in ViewBag.jobUserApply)
+                        {
+                            <li class="job_listing job-type-freelance job_position_featured type-job_listing status-publish has-post-thumbnail hentry job_listing_region-new-york job_listing_type-freelance"
+                                data-title="Web Designer at Squarespace" data-href="job/square-web-designer/index.html">
+                                <a asp-controller="JobClient" asp-action="DetailJob" asp-route-id="@job.TblJob.iJobID"
+                                    class="job_listing-clickbox"></a>
+                                <div class="job_listing-logo">
+                                    <img class="company_logo" src="@job.TblJob.TblCompany.sPhotoCompany"
+                                        alt="@job.TblJob.sNameJob &#8211; @job.TblJob.TblCategory.sCategoryName" />
+                                </div>
+                                <div class="job_listing-about">
+                                    <div class="job_listing-position job_listing__column">
+                                        <h3 class="job_listing-title">@job.TblJob.sNameJob</h3>
+
+                                        <div class="job_listing-company">
+                                            <strong>@job.TblJob.TblCategory.sCategoryName</strong>
+                                        </div>
+                                    </div>
+                                    <div class="job_listing-location job_listing__column">
+                                        <a class="google_map_link" target="_blank">@job.TblJob.TblCompany.sAddressCompany</a>
+                                    </div>
+                                    <div class="mb-2" style="color: green; font-size: 15px; font-weight: 600;">
+                                        Lương: ~ @FormatToVND(job.TblJob.fSalaryJob)
+                                    </div>
+                                    <ul class="job_listing-meta job_listing__column">
+                                        <li class="job_listing-type job-type">@job.TblJob.sTypeJob
+                                        </li>
+                                        <li class="job_listing-date">Đăng @GetRelativeTime(job.TblJob.dPostedDate)</li>
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div id="primary" class="content-area container" role="main">
+            <div class="row">
+                <div class="col-sm-12 col-md-10 col-md-offset-1">
+                    <article id="post-67" class="post-67 page type-page status-publish hentry">
+                        <div class="entry-content">
+                            <div id="job-manager-job-dashboard">
+                                <p class="account-sign-in">Bạn chưa ứng tuyển công việc nào cả.
+                                    <a asp-controller="JobClient" asp-action="SearchJob" class="button">Tìm kiếm việc làm</a>
+                                </p>
+                            </div>
+                        </div>
+                    </article><!-- #post -->
+                </div>
+            </div>
+        </div>
+    }
+}

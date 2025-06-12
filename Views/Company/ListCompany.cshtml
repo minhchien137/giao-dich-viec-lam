@@ -1,0 +1,135 @@
+@{
+    ViewData["Title"] = "Search List company";
+}
+@functions {
+    public string GetRelativeTime(DateTime postedDate)
+    {
+        DateTime now = DateTime.Now;
+        TimeSpan timeDiff = now - postedDate;
+
+        if (timeDiff.TotalHours < 24 && now.Date == postedDate.Date)
+        {
+            int hours = (int)timeDiff.TotalHours;
+            return $"{hours} giờ trước";
+        }
+        else
+        {
+            return postedDate.ToString("dd/MM/yyyy");
+        }
+    }
+    public static string FormatToVND(double amount)
+    {
+        var culture = new System.Globalization.CultureInfo("vi-VN");
+        return string.Format(culture, "{0:C0}", amount);
+    }
+}
+<header class="page-header">
+    <h2 class="page-title">
+        <section
+            class="elementor-section elementor-top-section elementor-element elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+            data-element_type="section">
+            <div class="elementor-container elementor-column-gap-default">
+                <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                    data-element_type="column">
+                    <div class="elementor-widget-wrap elementor-element-populated">
+                        <div class="elementor-element find-a-job-heading-jobiify-skin-2 elementor-widget elementor-widget-heading "
+                            data-element_type="widget" data-widget_type="heading.default">
+                            <div
+                                class="elementor-widget-container d-flex align-items-center justify-content-center w-100">
+                                <h1 class="elementor-heading-title elementor-size-default">Tìm kiếm <span
+                                        class="blue-highlight">công ty</span>
+                                </h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </h2>
+</header>
+<div data-elementor-type="wp-page" class="elementor">
+    <section
+        class="elementor-section elementor-top-section elementor-element job-listing-jobify-skin-2 elementor-section-boxed elementor-section-height-default elementor-section-height-default"
+        data-element_type="section">
+        <div class="elementor-container elementor-column-gap-default">
+            <div class="elementor-column elementor-col-100 elementor-top-column elementor-element"
+                data-element_type="column">
+                <div class="elementor-widget-wrap elementor-element-populated">
+                    <div class="elementor-element elementor-widget elementor-widget-elementify-jobs"
+                        data-element_type="widget" data-widget_type="elementify-jobs.default">
+                        <div class="elementor-widget-container">
+                            <div id="primary" role="main">
+                                <div class="container content-area">
+                                    <div class="job_listings" data-location="" data-keywords="" data-show_filters="true"
+                                         data-show_pagination="false" data-per_page="10" data-orderby="featured"
+                                         data-order="DESC" data-categories="" data-disable-form-state-storage="">
+                                        <form method="get" asp-controller="Company" asp-action="ListCompany" class="job_filters">
+                                            <div class="search_jobs">
+                                                <div class="search_keywords" style="width: 80%;">
+                                                    <label for="search_keywords">Từ khóa</label>
+                                                    <input type="text" name="search_keywords" id="search_keywords" placeholder="Từ khóa"
+                                                           value="@ViewBag.SearchKeywords" />
+                                                </div>
+                                                <div class="search_submit" style="width: 20%;">
+                                                    <input type="submit" name="submit" value="Search" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div><!-- #primary -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="mb-3">
+        @* Danh sách công ty *@
+        <div class="elementor-element  featured-job-jobify-skin-2  elementor-widget elementor-widget-wp-widget-widget_featured_jobs"
+            data-element_type="widget" data-widget_type="wp-widget-widget_featured_jobs.default">
+            <div class="elementor-widget-container">
+                <div class="job_manager widget_featured_jobs">
+                    <ul class="job_listings">
+                        @foreach (var company in ViewBag.companies)
+                        {
+                            <li class="job_listing job-type-freelance job_position_featured type-job_listing status-publish has-post-thumbnail hentry job_listing_region-new-york job_listing_type-freelance"
+                                data-title="Web Designer at Squarespace" data-href="job/square-web-designer/index.html">
+                                <a asp-controller="Company" asp-action="DetailCompany" asp-route-id="@company.iCompanyID"
+                                    class="job_listing-clickbox"></a>
+                                <div class="job_listing-logo">
+                                    <img class="company_logo" src="@company.sPhotoCompany" alt="@company.sNameCompany" />
+                                </div>
+                                <div class="job_listing-about">
+                                    <div class="job_listing-position job_listing__column">
+                                        <h3 class="job_listing-title">@company.sNameCompany</h3>
+                                    </div>
+                                    <div class="job_listing-location job_listing__column mt-3">
+                                        <a class="google_map_link" target="_blank">@company.sAddressCompany</a>
+                                    </div>
+                                    <ul class="job_listing-meta job_listing__column">
+                                        @* @company.sDescriptionCompany *@
+                                    </ul>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @* Load thêm *@
+        <div class="elementor-element elementor-element-ddb1c10 elementor-align-center elementor-widget elementor-widget-button"
+            data-id="ddb1c10" data-element_type="widget" data-widget_type="button.default">
+            <div class="elementor-widget-container">
+                <div class="elementor-button-wrapper">
+                    <a class="elementor-button elementor-button-link elementor-size-sm" href="find-a-job/index.html">
+                        <span class="elementor-button-content-wrapper">
+                            <span class="elementor-button-text">Hiện thêm</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
